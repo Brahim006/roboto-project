@@ -134,7 +134,6 @@ GameObject:
   - component: {fileID: 21953898}
   - component: {fileID: 21953901}
   - component: {fileID: 21953900}
-  - component: {fileID: 21953899}
   m_Layer: 3
   m_Name: ChainTop
   m_TagString: Untagged
@@ -157,19 +156,6 @@ Transform:
   m_Father: {fileID: 395440149}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!65 &21953899
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 21953897}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &21953900
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4655,6 +4641,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 395440149}
+  - component: {fileID: 395440150}
   m_Layer: 3
   m_Name: TransportationChain_1
   m_TagString: Untagged
@@ -4681,6 +4668,19 @@ Transform:
   m_Father: {fileID: 238220956}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &395440150
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 395440148}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 6.3, y: 0.75, z: 1}
+  m_Center: {x: -0.5, y: 0, z: 0.4}
 --- !u!1 &449890156
 GameObject:
   m_ObjectHideFlags: 0
@@ -4860,7 +4860,6 @@ GameObject:
   - component: {fileID: 477157896}
   - component: {fileID: 477157899}
   - component: {fileID: 477157898}
-  - component: {fileID: 477157897}
   m_Layer: 3
   m_Name: ChainSide_1
   m_TagString: Untagged
@@ -4883,19 +4882,6 @@ Transform:
   m_Father: {fileID: 395440149}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &477157897
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 477157895}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &477157898
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4957,7 +4943,6 @@ GameObject:
   - component: {fileID: 478014485}
   - component: {fileID: 478014488}
   - component: {fileID: 478014487}
-  - component: {fileID: 478014486}
   m_Layer: 3
   m_Name: ChainSide_1
   m_TagString: Untagged
@@ -4980,19 +4965,6 @@ Transform:
   m_Father: {fileID: 663314620}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &478014486
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 478014484}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &478014487
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5835,7 +5807,6 @@ GameObject:
   - component: {fileID: 536517387}
   - component: {fileID: 536517390}
   - component: {fileID: 536517389}
-  - component: {fileID: 536517388}
   m_Layer: 3
   m_Name: ChainSide_2
   m_TagString: Untagged
@@ -5858,19 +5829,6 @@ Transform:
   m_Father: {fileID: 395440149}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &536517388
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 536517386}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &536517389
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7530,6 +7488,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 663314620}
+  - component: {fileID: 663314621}
   m_Layer: 3
   m_Name: TransportationChain_2
   m_TagString: Untagged
@@ -7556,6 +7515,19 @@ Transform:
   m_Father: {fileID: 238220956}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &663314621
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 663314619}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.5, y: 0.75, z: 1}
+  m_Center: {x: 0.3, y: 0, z: 0.4}
 --- !u!1001 &674388604
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19092,7 +19064,6 @@ GameObject:
   - component: {fileID: 2028471397}
   - component: {fileID: 2028471400}
   - component: {fileID: 2028471399}
-  - component: {fileID: 2028471398}
   m_Layer: 3
   m_Name: ChainTop
   m_TagString: Untagged
@@ -19115,19 +19086,6 @@ Transform:
   m_Father: {fileID: 663314620}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!65 &2028471398
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2028471396}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &2028471399
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -19222,7 +19180,6 @@ GameObject:
   - component: {fileID: 2043770596}
   - component: {fileID: 2043770599}
   - component: {fileID: 2043770598}
-  - component: {fileID: 2043770597}
   m_Layer: 3
   m_Name: ChainSide_2
   m_TagString: Untagged
@@ -19245,19 +19202,6 @@ Transform:
   m_Father: {fileID: 663314620}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &2043770597
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2043770595}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &2043770598
 MeshRenderer:
   m_ObjectHideFlags: 0
