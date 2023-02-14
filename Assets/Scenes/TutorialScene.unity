@@ -559,7 +559,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 40443989}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Roof
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2176,9 +2176,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 210878155}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SecondFloor
-  m_TagString: Untagged
+  m_TagString: second-floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2198,7 +2198,7 @@ Transform:
   - {fileID: 1742882335}
   - {fileID: 1853795499}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &225651616
 GameObject:
@@ -2536,7 +2536,7 @@ Transform:
   - {fileID: 1995986992}
   - {fileID: 1762727541}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &247490242
 GameObject:
@@ -4174,7 +4174,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 15.067, y: -419.837, z: 8.59}
 --- !u!114 &330585547
 MonoBehaviour:
@@ -5448,7 +5448,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 457987716}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9509,7 +9509,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 774097300}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Light2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9962,7 +9962,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &848200173
 GameObject:
@@ -13066,7 +13066,7 @@ GameObject:
   - component: {fileID: 1230083232}
   - component: {fileID: 1230083234}
   - component: {fileID: 1230083233}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Point Light (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13689,7 +13689,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1342870676}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Light1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13721,9 +13721,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1362046987}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ThirdFloor
-  m_TagString: Untagged
+  m_TagString: third-floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13750,7 +13750,7 @@ Transform:
   - {fileID: 249856709}
   - {fileID: 113351136}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1373232809
 PrefabInstance:
@@ -20578,7 +20578,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1853795499}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Lights
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20968,6 +20968,8 @@ GameObject:
   - component: {fileID: 1882591622}
   - component: {fileID: 1882591621}
   - component: {fileID: 1882591626}
+  - component: {fileID: 1882591628}
+  - component: {fileID: 1882591627}
   m_Layer: 3
   m_Name: SecondFloorNorth
   m_TagString: Untagged
@@ -21339,6 +21341,31 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 13.505821, y: 2, z: 3.5124707}
   m_Center: {x: 6.7529106, y: 1, z: 1.7455361}
+--- !u!114 &1882591627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1882591619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0721ae3403e0d684abf1920e2fadf555, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &1882591628
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1882591619}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 13.505821, y: 0.2, z: 3.5124707}
+  m_Center: {x: 6.7529106, y: 2.1, z: 1.7455361}
 --- !u!43 &1904192074
 Mesh:
   m_ObjectHideFlags: 0
@@ -22646,7 +22673,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2039161491}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Lights
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23112,7 +23139,7 @@ GameObject:
   - component: {fileID: 2081379042}
   - component: {fileID: 2081379044}
   - component: {fileID: 2081379043}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Point Light (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23424,7 +23451,7 @@ PrefabInstance:
     - target: {fileID: 2702074048947843364, guid: b41629bf161358c4f9fceee6ced72f7e,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2702074048947843364, guid: b41629bf161358c4f9fceee6ced72f7e,
         type: 3}
