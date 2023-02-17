@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
-    private static readonly float MOVEMENT_SPEED = 2f;
-    private static readonly float ROTATION_SPEED = 2f;
+    private static readonly float WALK_SPEED = 2f;
     private static readonly float JUMP_MAGNITUDE = 5f;
     private Rigidbody rigidbody;
     void Start()
@@ -16,29 +15,32 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        OnPlayerMove();
+        OnPlayerWalk();
         OnPlayerJump();
     }
 
-    private void OnPlayerMove()
+    private void OnPlayerWalk()
     {
         var l_vertical = Input.GetAxisRaw("Vertical");
         var l_horizontal = Input.GetAxisRaw("Horizontal");
-        if(l_vertical != 0)
+
+        if (l_vertical != 0 || l_horizontal != 0)
         {
-            transform.position += transform.forward * l_vertical * MOVEMENT_SPEED * Time.deltaTime;
-        }
-        if(l_horizontal != 0)
-        {
-            transform.Rotate(Vector3.up, l_horizontal * ROTATION_SPEED);
+            var l_movementDirection = new Vector3(l_horizontal, 0, l_vertical);
+            transform.position += l_movementDirection * WALK_SPEED * Time.deltaTime;
+            transform.LookAt(transform.position + l_movementDirection);
         }
     }
 
     private void OnPlayerJump()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
-        { 
-            rigidbody.AddForceAtPosition(Vector3.up * JUMP_MAGNITUDE, transform.position, ForceMode.Impulse);
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Physics.Raycast(transform.position, Vector3.up * -1, out RaycastHit hitInfo);
+            if (hitInfo.distance < 0.1)
+            {
+                rigidbody.AddForceAtPosition(Vector3.up * JUMP_MAGNITUDE, transform.position, ForceMode.Impulse);
+            }
         }
     }
 }
