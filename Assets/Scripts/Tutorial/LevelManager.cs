@@ -8,8 +8,17 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField] GameObject secondFloor;
     [SerializeField] GameObject thirdFloor;
+
+    [SerializeField] Transform piecesInstanciatorMembers;
+    [SerializeField] Transform piecesInstanciatorCore;
+    [SerializeField] GameObject WorkerBody;
+    [SerializeField] GameObject WorkerHead;
+    [SerializeField] GameObject WorkerArm;
+    [SerializeField] GameObject WorkerLeg;
+
     [SerializeField] private Light thirdFloorLightA;
     [SerializeField] private Light thirdFloorLightB;
+
     private static readonly float LIGHT_TOGGLE_TIME = 4f;
     private static readonly float LIGHT_INTENSITY = 0.5f;
 
@@ -31,12 +40,6 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        ToggleLight();
-    }
-
     private void ToggleLight()
     {
         _timeOffset -= Time.deltaTime;
@@ -55,6 +58,10 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    public void InstanciateRobotParts()
+    {
+        // TODO: Instanciar partes robóticas en sus tuberías correspondientes
+    }
     public void ActivateSecondFloor()
     {
         if(!secondFloor.active)
