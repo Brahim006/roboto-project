@@ -6,6 +6,7 @@ public class CharacterController : MonoBehaviour
 {
     private static readonly float WALK_SPEED = 2f;
     private static readonly float JUMP_MAGNITUDE = 5f;
+    private bool alternativeCameraOn = false;
     private Rigidbody rigidbody;
     void Start()
     {
@@ -15,6 +16,7 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        OnSwitchCamera();
         OnPlayerWalk();
         OnPlayerJump();
     }
@@ -26,7 +28,10 @@ public class CharacterController : MonoBehaviour
 
         if (l_vertical != 0 || l_horizontal != 0)
         {
-            var l_movementDirection = new Vector3(l_horizontal, 0, l_vertical);
+            var l_movementDirection = 
+                alternativeCameraOn ?
+                new Vector3(-1 * l_vertical, 0, l_horizontal)
+                : new Vector3(l_horizontal, 0, l_vertical);
             transform.position += l_movementDirection * WALK_SPEED * Time.deltaTime;
             transform.LookAt(transform.position + l_movementDirection);
         }
@@ -41,6 +46,14 @@ public class CharacterController : MonoBehaviour
             {
                 rigidbody.AddForceAtPosition(Vector3.up * JUMP_MAGNITUDE, transform.position, ForceMode.Impulse);
             }
+        }
+    }
+
+    private void OnSwitchCamera()
+    {
+        if(Input.GetKeyDown(KeyCode.Tab)) 
+        { 
+            alternativeCameraOn = !alternativeCameraOn;
         }
     }
 }
