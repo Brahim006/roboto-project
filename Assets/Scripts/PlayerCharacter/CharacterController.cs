@@ -91,14 +91,6 @@ public class CharacterController : MonoBehaviour
                 break;
         }
     }
-
-    private void OnSwitchCamera()
-    {
-        if(Input.GetKeyDown(KeyCode.Tab)) 
-        { 
-            alternativeCameraOn = !alternativeCameraOn;
-        }
-    }
 }
 
 enum PlayerState
