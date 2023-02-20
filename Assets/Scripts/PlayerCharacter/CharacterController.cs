@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour
 {
     private static readonly float WALK_SPEED = 2f;
-    private static readonly float JUMP_MAGNITUDE = 1.5f;
+    private static readonly float JUMP_MAGNITUDE = 5f;
 
     private PlayerState playerState = PlayerState.Idle;
     private Rigidbody rigidbody;
@@ -25,6 +25,7 @@ public class CharacterController : MonoBehaviour
         OnAnimationSwitch();
         OnSwitchCamera();
         OnPlayerWalk();
+        OnPlayerJump();
     }
 
     private void OnPlayerWalk()
@@ -55,15 +56,23 @@ public class CharacterController : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnPlayerJump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && playerState != PlayerState.Falling)
+        if(Input.GetKeyDown(KeyCode.Space))
         {
             rigidbody.AddForceAtPosition(Vector3.up * JUMP_MAGNITUDE, transform.position, ForceMode.Impulse);
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerStay(Collider other)
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && playerState != PlayerState.Falling)
+        {
+            rigidbody.AddForceAtPosition(Vector3.up * JUMP_MAGNITUDE, transform.position, ForceMode.Impulse);
+        }
+    }*/
+
+    /*private void OnTriggerEnter(Collider other)
     {
         if(playerState == PlayerState.Falling) playerState= PlayerState.Idle;
     }
@@ -71,7 +80,7 @@ public class CharacterController : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         playerState= PlayerState.Falling;
-    }
+    }*/
 
     private void OnAnimationSwitch()
     {

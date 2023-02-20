@@ -7,7 +7,7 @@ public class ActivablePlataform : MonoBehaviour
     private Animator animator;
     void Start()
     {
-        animator= GetComponent<Animator>();
+        animator = GetComponent<Animator>();
     }
 
     public void OnToggleActive () 
