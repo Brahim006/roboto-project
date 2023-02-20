@@ -8,10 +8,7 @@ public class PlataformSwitch : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (
-            other.gameObject.TryGetComponent<CharacterController>(out CharacterController player)
-            && Input.GetKeyDown(KeyCode.E)
-        )
+        if (other.gameObject.layer == 6 && Input.GetKeyDown(KeyCode.E))
         {
             plataform.OnToggleActive();
         }

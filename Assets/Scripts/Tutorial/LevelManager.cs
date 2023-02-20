@@ -30,7 +30,6 @@ public class LevelManager : MonoBehaviour
             instance = this;
             _timeOffset = LIGHT_TOGGLE_TIME;
             secondFloor.SetActive(false);
-            thirdFloor.SetActive(true);
             thirdFloorLightA.intensity = LIGHT_INTENSITY;
             thirdFloorLightB.intensity = 0;
         }
@@ -38,6 +37,11 @@ public class LevelManager : MonoBehaviour
         {
             Destroy(instance);
         }
+    }
+
+    private void Update()
+    {
+        ToggleLight();
     }
 
     private void ToggleLight()
@@ -74,24 +78,7 @@ public class LevelManager : MonoBehaviour
     {
         if(secondFloor.active)
         {
-            thirdFloor.SetActive(false);
             secondFloor.SetActive(false);
-        }
-    }
-
-    public void ActivateThirdFloor()
-    {
-        if (!thirdFloor.active)
-        {
-            thirdFloor.SetActive(true);
-        }
-    }
-
-    public void DisableThirdFloor()
-    {
-        if(thirdFloor.active)
-        {
-            thirdFloor.SetActive(false);
         }
     }
 }
