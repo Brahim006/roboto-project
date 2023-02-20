@@ -30,7 +30,7 @@ public class LevelManager : MonoBehaviour
             instance = this;
             _timeOffset = LIGHT_TOGGLE_TIME;
             secondFloor.SetActive(false);
-            thirdFloor.SetActive(false);
+            thirdFloor.SetActive(true);
             thirdFloorLightA.intensity = LIGHT_INTENSITY;
             thirdFloorLightB.intensity = 0;
         }
