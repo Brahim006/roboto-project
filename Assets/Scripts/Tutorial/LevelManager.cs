@@ -61,11 +61,6 @@ public class LevelManager : MonoBehaviour
             }
         }
     }
-
-    public void InstanciateRobotParts()
-    {
-        // TODO: Instanciar partes robóticas en sus tuberías correspondientes
-    }
     public void ActivateSecondFloor()
     {
         if(!secondFloor.active)
