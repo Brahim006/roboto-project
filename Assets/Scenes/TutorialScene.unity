@@ -3095,6 +3095,19 @@ MonoBehaviour:
   levelManager: {fileID: 242089792}
   subsPartsInstanciator: {fileID: 1104581033}
   principalsPartsInstanciator: {fileID: 521509265}
+  subsPartsPrefabs:
+  - {fileID: 2181355123364965278, guid: dd1fa523440e50148b1b7e590be2f48a, type: 3}
+  - {fileID: 4838215795530316664, guid: b16b1fa63443ed44e8d2401076eb66d1, type: 3}
+  - {fileID: 4405801233135157426, guid: 82aa52fd63e7467468d55c1143ddd11e, type: 3}
+  - {fileID: 3460209086124196181, guid: 54c1bebf23e8ce94eac47fb001c043a0, type: 3}
+  - {fileID: 7146437584192270949, guid: 079840f2df2f1fa469ac712e15d9e492, type: 3}
+  principalsPartsPrefabs:
+  - {fileID: 3111438158931427087, guid: 8f3b0eb971556e54182bc9f83aa72bc0, type: 3}
+  - {fileID: 5366829513828705968, guid: b0c88e988f50e9a4796a753a0094f244, type: 3}
+  - {fileID: 6355912310289409262, guid: 85ff16b63f6982144bba7794330ec879, type: 3}
+  - {fileID: 591517911501826020, guid: c3d793f5315339a49a8a2d932013ca86, type: 3}
+  - {fileID: 5047210540806897154, guid: 733a1eb24a95d194797edb94eb52fa31, type: 3}
+  - {fileID: 2828017916718296807, guid: 2867bde5ae7a2514380dd21e3aedc4de, type: 3}
 --- !u!65 &203442416
 BoxCollider:
   m_ObjectHideFlags: 0
