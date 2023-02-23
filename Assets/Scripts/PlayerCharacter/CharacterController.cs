@@ -9,6 +9,7 @@ public class CharacterController : MonoBehaviour
     private static readonly float RUN_SPEED = 4f;
     private static readonly float JUMP_MAGNITUDE = 5f;
     private static readonly float PRESS_BUTTON_ANIMATION_LENGTH = 2f;
+    private static readonly float LANDING_THRESHOLD = 1.1f;
 
     private PlayerState playerState = PlayerState.Idle;
     private Rigidbody rigidbody;
@@ -27,14 +28,15 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        OnAnimationSwitch();
         if(!_isActionBlocked)
         {
             OnSwitchCamera();
             OnPlayerWalk();
             OnPlayerJump();
         }
+        CheckForFallingState();
         OnPlayerPressingButton();
+        OnAnimationSwitch();
     }
 
     private void OnPlayerWalk()
@@ -62,7 +64,7 @@ public class CharacterController : MonoBehaviour
 
             transform.LookAt(transform.position + l_movementDirection);
             transform.position += l_movementDirection * speed * Time.deltaTime;
-        } else if(playerState == PlayerState.Walking || playerState == PlayerState.Running)
+        } else if(playerState == PlayerState.Walking || playerState == PlayerState.Running || playerState == PlayerState.Falling)
         {
             playerState = PlayerState.Idle;
         }
@@ -83,9 +85,32 @@ public class CharacterController : MonoBehaviour
             Physics.Raycast(transform.position + Vector3.up, Vector3.down, out RaycastHit hitInfo);
             if(hitInfo.distance < 1.1)
             {
+                playerState = PlayerState.Jumping;
                 rigidbody.AddForceAtPosition(Vector3.up * JUMP_MAGNITUDE, transform.position, ForceMode.Impulse);
             }
         }
+    }
+
+    private void CheckForFallingState()
+    {
+        var velocity = rigidbody.velocity.y;
+        if(rigidbody.velocity.y < 0)
+        {
+            Physics.Raycast(transform.position + Vector3.up, Vector3.down, out RaycastHit hitInfo);
+            if(hitInfo.distance <= LANDING_THRESHOLD)
+            {
+                playerState = PlayerState.Landing;
+            }
+            else
+            {
+                playerState = PlayerState.Falling;
+            }
+        }
+        else if (playerState == PlayerState.Landing && rigidbody.velocity.y == 0)
+        {
+            playerState = PlayerState.Idle;
+        }
+
     }
 
     private void OnPlayerPressingButton()
@@ -122,11 +147,17 @@ public class CharacterController : MonoBehaviour
             case PlayerState.Running:
                 if (animator.GetInteger("animation") != 2) animator.SetInteger("animation", 2);
                 break;
-            case PlayerState.Falling:
+            case PlayerState.Jumping:
                 if (animator.GetInteger("animation") != 3) animator.SetInteger("animation", 3);
                 break;
-            case PlayerState.PressingButton:
+            case PlayerState.Falling:
                 if (animator.GetInteger("animation") != 4) animator.SetInteger("animation", 4);
+                break;
+            case PlayerState.Landing:
+                if (animator.GetInteger("animation") != 5) animator.SetInteger("animation", 5);
+                break;
+            case PlayerState.PressingButton:
+                if (animator.GetInteger("animation") != 6) animator.SetInteger("animation", 6);
                 break;
             default:
                 if (animator.GetInteger("animation") != 0) animator.SetInteger("animation", 0);
@@ -140,6 +171,8 @@ enum PlayerState
     Idle,
     Walking,
     Running,
+    Jumping,
     Falling,
+    Landing,
     PressingButton
 }
