@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 535b837c78ba8aa4cb8a26a866e03d2b
+guid: 443980a8e0cee1544a94d9672888da33
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -24,20 +24,20 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
-    animationRotationError: 0
-    animationPositionError: 0
-    animationScaleError: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Idle
+      name: Running
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 86
+      lastFrame: 23
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,27 +6,37 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour
 {
     private static readonly float WALK_SPEED = 2f;
+    private static readonly float RUN_SPEED = 4f;
     private static readonly float JUMP_MAGNITUDE = 5f;
+    private static readonly float PRESS_BUTTON_ANIMATION_LENGTH = 2f;
+    private static readonly float FALLING_VELOCITY_THRESHOLD = -1f;
 
     private PlayerState playerState = PlayerState.Idle;
     private Rigidbody rigidbody;
-    private Light headLight;
     private Animator animator;
 
+    private bool _isActionBlocked = false;
     private bool _alternativeCameraOn = false;
+    private float _pressButtonOffset;
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
         animator = gameObject.GetComponentInChildren<Animator>();
+        _pressButtonOffset = PRESS_BUTTON_ANIMATION_LENGTH;
     }
 
     // Update is called once per frame
     void Update()
     {
         OnAnimationSwitch();
-        OnSwitchCamera();
-        OnPlayerWalk();
-        OnPlayerJump();
+        if(!_isActionBlocked)
+        {
+            OnSwitchCamera();
+            OnPlayerWalk();
+            OnPlayerJump();
+        }
+        CheckForFallingState();
+        OnPlayerPressingButton();
     }
 
     private void OnPlayerWalk()
@@ -35,14 +46,25 @@ public class CharacterController : MonoBehaviour
 
         if (l_vertical != 0 || l_horizontal != 0)
         {
-            playerState = PlayerState.Walking;
+            float speed;
+            if(Input.GetKey(KeyCode.LeftShift))
+            {
+                speed = RUN_SPEED;
+                playerState = PlayerState.Running;
+            }
+            else
+            {
+                speed = WALK_SPEED;
+                playerState = PlayerState.Walking;
+            }
             var l_movementDirection =
                 _alternativeCameraOn ?
                 new Vector3(-1 * l_vertical, 0, l_horizontal)
                 : new Vector3(l_horizontal, 0, l_vertical);
-            transform.position += l_movementDirection * WALK_SPEED * Time.deltaTime;
+
             transform.LookAt(transform.position + l_movementDirection);
-        } else if(playerState == PlayerState.Walking)
+            transform.position += l_movementDirection * speed * Time.deltaTime;
+        } else if(playerState == PlayerState.Walking || playerState == PlayerState.Running)
         {
             playerState = PlayerState.Idle;
         }
@@ -60,27 +82,52 @@ public class CharacterController : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            rigidbody.AddForceAtPosition(Vector3.up * JUMP_MAGNITUDE, transform.position, ForceMode.Impulse);
+            Physics.Raycast(transform.position + Vector3.up, Vector3.down, out RaycastHit hitInfo);
+            if(hitInfo.distance < 1.1)
+            {
+                playerState = PlayerState.Jumping;
+                rigidbody.AddForceAtPosition(Vector3.up * JUMP_MAGNITUDE, transform.position, ForceMode.Impulse);
+            }
         }
     }
 
-    /*private void OnTriggerStay(Collider other)
+    private void CheckForFallingState()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && playerState != PlayerState.Falling)
+        var velocity = rigidbody.velocity.y;
+        if(rigidbody.velocity.y < FALLING_VELOCITY_THRESHOLD)
         {
-            rigidbody.AddForceAtPosition(Vector3.up * JUMP_MAGNITUDE, transform.position, ForceMode.Impulse);
+            playerState = PlayerState.Falling;
         }
-    }*/
+        else if (playerState == PlayerState.Falling && rigidbody.velocity.y == 0)
+        {
+            playerState = PlayerState.Idle;
+        }
 
-    /*private void OnTriggerEnter(Collider other)
-    {
-        if(playerState == PlayerState.Falling) playerState= PlayerState.Idle;
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnPlayerPressingButton()
     {
-        playerState= PlayerState.Falling;
-    }*/
+        if(playerState == PlayerState.PressingButton)
+        {
+            _pressButtonOffset -= Time.deltaTime;
+            if(_pressButtonOffset <= 0)
+            {
+                playerState = PlayerState.Idle;
+                _pressButtonOffset = PRESS_BUTTON_ANIMATION_LENGTH;
+                _isActionBlocked = false;
+            }
+        }
+    }
+    public void PressButton(Vector3 buttonDirection)
+    {
+        if(playerState == PlayerState.Idle)
+        {
+            _isActionBlocked = true;
+            var angle = Vector3.Angle(transform.forward, buttonDirection) - 30;
+            transform.Rotate(Vector3.up, angle);
+            playerState = PlayerState.PressingButton;
+        }
+    }
 
     private void OnAnimationSwitch()
     {
@@ -92,8 +139,17 @@ public class CharacterController : MonoBehaviour
             case PlayerState.Running:
                 if (animator.GetInteger("animation") != 2) animator.SetInteger("animation", 2);
                 break;
-            case PlayerState.Falling:
+            case PlayerState.Jumping:
                 if (animator.GetInteger("animation") != 3) animator.SetInteger("animation", 3);
+                break;
+            case PlayerState.Falling:
+                if (animator.GetInteger("animation") != 4) animator.SetInteger("animation", 4);
+                break;
+            case PlayerState.Landing:
+                if (animator.GetInteger("animation") != 5) animator.SetInteger("animation", 5);
+                break;
+            case PlayerState.PressingButton:
+                if (animator.GetInteger("animation") != 6) animator.SetInteger("animation", 6);
                 break;
             default:
                 if (animator.GetInteger("animation") != 0) animator.SetInteger("animation", 0);
@@ -107,6 +163,8 @@ enum PlayerState
     Idle,
     Walking,
     Running,
+    Jumping,
     Falling,
+    Landing,
     PressingButton
 }

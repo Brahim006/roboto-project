@@ -11,6 +11,8 @@ public class PlataformSwitch : MonoBehaviour
         if (other.gameObject.layer == 6 && Input.GetKeyDown(KeyCode.E))
         {
             plataform.OnToggleActive();
+            other.TryGetComponent<CharacterController>(out CharacterController controller);
+            if(controller != null) controller.PressButton(transform.position);
         }
     }
 }
