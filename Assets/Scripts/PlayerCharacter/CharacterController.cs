@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -79,7 +80,11 @@ public class CharacterController : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            rigidbody.AddForceAtPosition(Vector3.up * JUMP_MAGNITUDE, transform.position, ForceMode.Impulse);
+            Physics.Raycast(transform.position + Vector3.up, Vector3.down, out RaycastHit hitInfo);
+            if(hitInfo.distance < 1.1)
+            {
+                rigidbody.AddForceAtPosition(Vector3.up * JUMP_MAGNITUDE, transform.position, ForceMode.Impulse);
+            }
         }
     }
 
