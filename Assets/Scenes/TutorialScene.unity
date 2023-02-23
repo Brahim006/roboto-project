@@ -11223,6 +11223,11 @@ PrefabInstance:
       propertyPath: fallingThreshold
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8909527745411506486, guid: 50b0541e3b86aab48a7cf3351c0e3881,
+        type: 3}
+      propertyPath: FALLING_VELOCITY_THRESHOLD
+      value: -0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 50b0541e3b86aab48a7cf3351c0e3881, type: 3}
 --- !u!1 &592640002

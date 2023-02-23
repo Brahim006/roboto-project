@@ -9,7 +9,7 @@ public class CharacterController : MonoBehaviour
     private static readonly float RUN_SPEED = 4f;
     private static readonly float JUMP_MAGNITUDE = 5f;
     private static readonly float PRESS_BUTTON_ANIMATION_LENGTH = 2f;
-    private static readonly float LANDING_THRESHOLD = 1.1f;
+    private static readonly float FALLING_VELOCITY_THRESHOLD = -1f;
 
     private PlayerState playerState = PlayerState.Idle;
     private Rigidbody rigidbody;
@@ -28,6 +28,7 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        OnAnimationSwitch();
         if(!_isActionBlocked)
         {
             OnSwitchCamera();
@@ -36,7 +37,6 @@ public class CharacterController : MonoBehaviour
         }
         CheckForFallingState();
         OnPlayerPressingButton();
-        OnAnimationSwitch();
     }
 
     private void OnPlayerWalk()
@@ -64,7 +64,7 @@ public class CharacterController : MonoBehaviour
 
             transform.LookAt(transform.position + l_movementDirection);
             transform.position += l_movementDirection * speed * Time.deltaTime;
-        } else if(playerState == PlayerState.Walking || playerState == PlayerState.Running || playerState == PlayerState.Falling)
+        } else if(playerState == PlayerState.Walking || playerState == PlayerState.Running)
         {
             playerState = PlayerState.Idle;
         }
@@ -94,19 +94,11 @@ public class CharacterController : MonoBehaviour
     private void CheckForFallingState()
     {
         var velocity = rigidbody.velocity.y;
-        if(rigidbody.velocity.y < 0)
+        if(rigidbody.velocity.y < FALLING_VELOCITY_THRESHOLD)
         {
-            Physics.Raycast(transform.position + Vector3.up, Vector3.down, out RaycastHit hitInfo);
-            if(hitInfo.distance <= LANDING_THRESHOLD)
-            {
-                playerState = PlayerState.Landing;
-            }
-            else
-            {
-                playerState = PlayerState.Falling;
-            }
+            playerState = PlayerState.Falling;
         }
-        else if (playerState == PlayerState.Landing && rigidbody.velocity.y == 0)
+        else if (playerState == PlayerState.Falling && rigidbody.velocity.y == 0)
         {
             playerState = PlayerState.Idle;
         }
