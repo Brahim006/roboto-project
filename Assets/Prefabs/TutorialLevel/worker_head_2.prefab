@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5278548188241513810}
   - component: {fileID: 7031813092523176984}
   - component: {fileID: 5815201419395584140}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 4697570720914865162}
   - component: {fileID: 5096850830974735443}
   - component: {fileID: 5096850830974735442}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: worker_head_2
   m_TagString: destructable-object
   m_Icon: {fileID: 0}

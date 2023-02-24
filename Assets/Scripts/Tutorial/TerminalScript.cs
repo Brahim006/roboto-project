@@ -1,27 +1,84 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class TerminalScript : MonoBehaviour
 {
-    [SerializeField] LevelManager levelManager;
-    private float _timeFromLastInstanciation = 0;
+    [SerializeField] private GameObject memberPartsInstantiator;
+    [SerializeField] private GameObject corePartsInstantiator;
+    [SerializeField] private GameObject[] memberPartsPrefabs;
+    [SerializeField] private GameObject[] corePartsPrefabs;
+    [SerializeField] private TutorialWorker[] workers;
+    private Queue<GameObject> memberPartsQueue = new Queue<GameObject>();
+    private Queue<GameObject> corePartsQueue = new Queue<GameObject>();
+
+    private static readonly int PARTS_PER_QUEUE = 3;
+    private static readonly float SECONDS_BEFORE_RANT = 5f;
+
+    private float _rantOffset;
+    private void Start()
+    {
+        _rantOffset = SECONDS_BEFORE_RANT;
+        FillRobotPartsQueues();
+    }
 
     private void Update()
     {
-        _timeFromLastInstanciation += Time.deltaTime;
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if(other.TryGetComponent<CharacterController>(out CharacterController player))
+        if(memberPartsQueue.Count != 0)
         {
-            if(Input.GetKeyDown(KeyCode.E) && _timeFromLastInstanciation > 1)
+            if(_rantOffset < 0)
             {
-                levelManager.InstanciateRobotParts();
-                _timeFromLastInstanciation = 0;
+                OnWorkersRant();
+            } else
+            {
+                _rantOffset -= Time.deltaTime;
             }
         }
     }
+    private void OnTriggerStay(Collider other)
+    {
+        var areQueuesEmpty = memberPartsQueue.Count == 0 || corePartsQueue.Count == 0;
+        if(
+            Input.GetKeyDown(KeyCode.E) &&
+            !areQueuesEmpty &&
+            other.TryGetComponent<CharacterController>(out CharacterController player)
+          )
+        {
+            player.PressButton(transform.position);
+            InstantiateRobotParts();
+            OnWorkersStopRanting();
+        }
+    }
 
+    private void InstantiateRobotParts()
+    {
+        Instantiate(memberPartsQueue.Dequeue(), memberPartsInstantiator.transform.position, memberPartsInstantiator.transform.rotation);
+        Instantiate(corePartsQueue.Dequeue(), corePartsInstantiator.transform.position, corePartsInstantiator.transform.rotation);
+    }
+
+    private void FillRobotPartsQueues()
+    {
+        for(int i = 0; i < PARTS_PER_QUEUE; i++)
+        {
+            memberPartsQueue.Enqueue(memberPartsPrefabs[Random.Range(0, memberPartsPrefabs.Length)]);
+            corePartsQueue.Enqueue(corePartsPrefabs[Random.Range(0, corePartsPrefabs.Length)]);
+        }
+    }
+
+    private void OnWorkersRant()
+    {
+        foreach(TutorialWorker worker in workers)
+        {
+            worker.Rant();
+        }
+    }
+
+    private void OnWorkersStopRanting()
+    {
+        foreach (TutorialWorker worker in workers)
+        {
+            worker.StopRanting();
+        }
+    }
 }
