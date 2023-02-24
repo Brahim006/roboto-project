@@ -9,16 +9,33 @@ public class TerminalScript : MonoBehaviour
     [SerializeField] private GameObject corePartsInstantiator;
     [SerializeField] private GameObject[] memberPartsPrefabs;
     [SerializeField] private GameObject[] corePartsPrefabs;
+    [SerializeField] private TutorialWorker[] workers;
     private Queue<GameObject> memberPartsQueue = new Queue<GameObject>();
     private Queue<GameObject> corePartsQueue = new Queue<GameObject>();
 
     private static readonly int PARTS_PER_QUEUE = 3;
+    private static readonly float SECONDS_BEFORE_RANT = 5f;
 
+    private float _rantOffset;
     private void Start()
     {
+        _rantOffset = SECONDS_BEFORE_RANT;
         FillRobotPartsQueues();
     }
 
+    private void Update()
+    {
+        if(memberPartsQueue.Count != 0)
+        {
+            if(_rantOffset < 0)
+            {
+                OnWorkersRant();
+            } else
+            {
+                _rantOffset -= Time.deltaTime;
+            }
+        }
+    }
     private void OnTriggerStay(Collider other)
     {
         var areQueuesEmpty = memberPartsQueue.Count == 0 || corePartsQueue.Count == 0;
@@ -30,6 +47,7 @@ public class TerminalScript : MonoBehaviour
         {
             player.PressButton(transform.position);
             InstantiateRobotParts();
+            OnWorkersStopRanting();
         }
     }
 
@@ -45,6 +63,22 @@ public class TerminalScript : MonoBehaviour
         {
             memberPartsQueue.Enqueue(memberPartsPrefabs[Random.Range(0, memberPartsPrefabs.Length)]);
             corePartsQueue.Enqueue(corePartsPrefabs[Random.Range(0, corePartsPrefabs.Length)]);
+        }
+    }
+
+    private void OnWorkersRant()
+    {
+        foreach(TutorialWorker worker in workers)
+        {
+            worker.Rant();
+        }
+    }
+
+    private void OnWorkersStopRanting()
+    {
+        foreach (TutorialWorker worker in workers)
+        {
+            worker.StopRanting();
         }
     }
 }
