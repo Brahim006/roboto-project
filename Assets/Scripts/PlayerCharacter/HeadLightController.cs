@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class HeadLightController : MonoBehaviour
 {
+    private Light light;
     private void Start()
     {
-        gameObject.SetActive(false);
+        light = GetComponent<Light>();
+        light.enabled = false;
     }
 
     void Update()
@@ -17,7 +19,14 @@ public class HeadLightController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
-            gameObject.SetActive(!gameObject.active);
+            if(light.isActiveAndEnabled)
+            {
+                light.enabled = false;
+            }
+            else
+            {
+                light.enabled = true;
+            }
         }
     }
 }
