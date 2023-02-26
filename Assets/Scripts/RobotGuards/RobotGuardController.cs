@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class RobotGuardController : MonoBehaviour
 {
-    private static readonly float PUSH_INTENSITY = 2f;
+    private static readonly float PUSH_INTENSITY = 5f;
 
     private Animator animator;
     private GuardState guardState = GuardState.Idle;
@@ -40,12 +40,17 @@ public class RobotGuardController : MonoBehaviour
             l_guardLookPoint.y = transform.position.y;
             transform.LookAt(l_guardLookPoint);
             var distance = Vector3.Distance(transform.position, other.transform.position);
-            if(distance <= 0.5f)
+            if(distance <= 0.5f && guardState != GuardState.HeadbuttPush)
             {
                 guardState = GuardState.HeadbuttPush;
                 var l_playerLookPoint = transform.position;
                 l_playerLookPoint.y = other.transform.position.y;
                 other.attachedRigidbody.AddForce(transform.forward + Vector3.up * PUSH_INTENSITY, ForceMode.Impulse);
+                other.gameObject.GetComponent<CharacterController>().OnReceiveDamage(5);
+            }
+            else if(guardState != GuardState.GuardIdle)
+            {
+                guardState = GuardState.GuardIdle;
             }
         }
     }
