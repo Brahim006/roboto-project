@@ -12,10 +12,11 @@ public class CharacterController : MonoBehaviour
     private static readonly float FALLING_VELOCITY_THRESHOLD = -1f;
     private static readonly int INITIAL_HEALTH = 100;
 
+    [SerializeField] private HUDManager hudManager;
     private PlayerState playerState = PlayerState.Idle;
     private Rigidbody rigidbody;
     private Animator animator;
-    private int health;
+    public int health;
 
     private bool _isActionBlocked = false;
     private bool _alternativeCameraOn = false;
@@ -167,6 +168,7 @@ public class CharacterController : MonoBehaviour
         newHealth -= amount;
         if(newHealth <0) newHealth = 0;
         health = newHealth;
+        hudManager.SubstractHealth(amount);
     }
 }
 
