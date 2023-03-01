@@ -1083,6 +1083,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1fa489ff79fb04647aee9bae4dcaaeff,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1fa489ff79fb04647aee9bae4dcaaeff,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1fa489ff79fb04647aee9bae4dcaaeff,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1fa489ff79fb04647aee9bae4dcaaeff,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.051
       objectReference: {fileID: 0}
@@ -3247,6 +3262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab44ca7255f1534daca21f02bc4c2a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelManager: {fileID: 242089792}
   memberPartsInstantiator: {fileID: 1104581032}
   corePartsInstantiator: {fileID: 521509264}
   memberPartsPrefabs:
@@ -14363,6 +14379,7 @@ GameObject:
   - component: {fileID: 911841543}
   - component: {fileID: 911841545}
   - component: {fileID: 911841544}
+  - component: {fileID: 911841546}
   m_Layer: 3
   m_Name: PipeEntrances
   m_TagString: Untagged
@@ -14413,6 +14430,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.95, y: 1, z: 2.2}
   m_Center: {x: -3, y: -0.35, z: -0.2}
+--- !u!114 &911841546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911841542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94e7cd81040288e46a8814c1373a7df4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelManager: {fileID: 242089792}
 --- !u!1001 &920145653
 PrefabInstance:
   m_ObjectHideFlags: 0

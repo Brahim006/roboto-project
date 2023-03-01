@@ -49,9 +49,24 @@ public class LevelManager : MonoBehaviour
         workerLegless.SetActive(true);
     }
 
+    public bool IsLeglessWorkerActive()
+    {
+        return workerLegless.active;
+    }
+
     public void ActivateStuckedHead()
     {
         stuckHead.SetActive(true);
+    }
+
+    public void DeactivateStuckedHead()
+    {
+        stuckHead.SetActive(false);
+    }
+
+    public bool IsHeadStucked()
+    {
+        return stuckHead.active;
     }
     private void ToggleLight()
     {
