@@ -8,6 +8,7 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField] GameObject secondFloor;
     [SerializeField] GameObject workerLegless;
+    [SerializeField] GameObject guard;
     [SerializeField] GameObject stuckHead;
 
     [SerializeField] private Light thirdFloorLightA;
@@ -15,6 +16,8 @@ public class LevelManager : MonoBehaviour
 
     private static readonly float LIGHT_TOGGLE_TIME = 4f;
     private static readonly float LIGHT_INTENSITY = 0.5f;
+    private static readonly Vector3 GUARD_FINAL_POSITION = new Vector3(3, 2, 9.6f);
+    private static readonly float ADD_TO_GUARD_FINAL_ROTATION = 30f;
 
     private float _timeOffset;
 
@@ -44,24 +47,22 @@ public class LevelManager : MonoBehaviour
         ToggleLight();
     }
 
-    public void ActivateLeglessWorker()
+    public void SetLevelFirstMilestone()
+    {
+        stuckHead.SetActive(true);
+    }
+
+    public void SetLevelSecondMilestone()
     {
         workerLegless.SetActive(true);
+        stuckHead.SetActive(false);
+        guard.transform.position = GUARD_FINAL_POSITION;
+        guard.transform.Rotate(Vector3.up, ADD_TO_GUARD_FINAL_ROTATION);
     }
 
     public bool IsLeglessWorkerActive()
     {
         return workerLegless.active;
-    }
-
-    public void ActivateStuckedHead()
-    {
-        stuckHead.SetActive(true);
-    }
-
-    public void DeactivateStuckedHead()
-    {
-        stuckHead.SetActive(false);
     }
 
     public bool IsHeadStucked()

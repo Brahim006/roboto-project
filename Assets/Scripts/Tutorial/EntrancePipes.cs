@@ -16,8 +16,7 @@ public class EntrancePipes : MonoBehaviour
           )
         {
             player.PressButton(transform.position);
-            levelManager.DeactivateStuckedHead();
-            levelManager.ActivateLeglessWorker();
+            levelManager.SetLevelSecondMilestone();
         }
     }
 }

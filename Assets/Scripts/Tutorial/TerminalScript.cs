@@ -58,7 +58,7 @@ public class TerminalScript : MonoBehaviour
         Instantiate(corePartsQueue.Dequeue(), corePartsInstantiator.transform.position, corePartsInstantiator.transform.rotation);
         if(memberPartsQueue.Count == 0 || corePartsQueue.Count == 0)
         {
-            levelManager.ActivateStuckedHead();
+            levelManager.SetLevelFirstMilestone();
         }
     }
 
