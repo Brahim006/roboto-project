@@ -17,7 +17,6 @@ public class CharacterController : MonoBehaviour
     private Animator animator;
     private int health;
 
-    private bool _isActionBlocked = false;
     private bool _alternativeCameraOn = false;
     private float _pressButtonOffset;
     void Start()
@@ -32,7 +31,7 @@ public class CharacterController : MonoBehaviour
     void Update()
     {
         OnAnimationSwitch();
-        if(!_isActionBlocked)
+        if(playerState != PlayerState.PressingButton)
         {
             OnSwitchCamera();
             OnPlayerWalk();
@@ -117,17 +116,15 @@ public class CharacterController : MonoBehaviour
             {
                 playerState = PlayerState.Idle;
                 _pressButtonOffset = PRESS_BUTTON_ANIMATION_LENGTH;
-                _isActionBlocked = false;
             }
         }
     }
     public void PressButton(Vector3 buttonDirection)
     {
-        if(playerState == PlayerState.Idle)
+        if(playerState != PlayerState.PressingButton)
         {
-            _isActionBlocked = true;
-            var angle = Vector3.Angle(transform.forward, buttonDirection) - 30;
-            transform.Rotate(Vector3.up, angle);
+            Vector3 lookAtPoint = new Vector3(buttonDirection.x, transform.position.y, buttonDirection.z);
+            transform.LookAt(lookAtPoint);
             playerState = PlayerState.PressingButton;
         }
     }

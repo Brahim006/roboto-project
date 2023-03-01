@@ -60,6 +60,11 @@ public class LevelManager : MonoBehaviour
         guard.transform.Rotate(Vector3.up, ADD_TO_GUARD_FINAL_ROTATION);
     }
 
+    public void OnTutorialLevelCompletion()
+    {
+        // TODO: Cambiar de escena y dar feedback al jugador
+        Debug.Log("Terminado");
+    }
     public bool IsLeglessWorkerActive()
     {
         return workerLegless.active;
