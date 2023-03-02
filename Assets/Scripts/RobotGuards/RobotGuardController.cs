@@ -36,8 +36,7 @@ public class RobotGuardController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            var l_guardLookPoint = other.transform.position;
-            l_guardLookPoint.y = transform.position.y;
+            var l_guardLookPoint = new Vector3(other.transform.position.x, transform.position.y, other.transform.position.z);
             transform.LookAt(l_guardLookPoint);
             var distance = Vector3.Distance(transform.position, other.transform.position);
             if(distance <= 0.5f && guardState != GuardState.HeadbuttPush)
@@ -45,7 +44,8 @@ public class RobotGuardController : MonoBehaviour
                 guardState = GuardState.HeadbuttPush;
                 var l_playerLookPoint = transform.position;
                 l_playerLookPoint.y = other.transform.position.y;
-                other.attachedRigidbody.AddForce(transform.forward + Vector3.up * PUSH_INTENSITY, ForceMode.Impulse);
+                other.attachedRigidbody.velocity = new Vector3(0, 0, 0);
+                other.attachedRigidbody.AddForce((other.transform.forward * -1) + Vector3.up * PUSH_INTENSITY, ForceMode.Impulse);
                 other.gameObject.GetComponent<CharacterController>().OnReceiveDamage(5);
             }
             else if(guardState != GuardState.GuardIdle)
