@@ -10,16 +10,18 @@ public class CharacterController : MonoBehaviour
     private static readonly float JUMP_MAGNITUDE = 5f;
     private static readonly float PRESS_BUTTON_ANIMATION_LENGTH = 2f;
     private static readonly float FALLING_VELOCITY_THRESHOLD = -1f;
+    private static readonly int INITIAL_HEALTH = 100;
 
     private PlayerState playerState = PlayerState.Idle;
     private Rigidbody rigidbody;
     private Animator animator;
+    private int health;
 
-    private bool _isActionBlocked = false;
     private bool _alternativeCameraOn = false;
     private float _pressButtonOffset;
     void Start()
     {
+        health = INITIAL_HEALTH;
         rigidbody = GetComponent<Rigidbody>();
         animator = gameObject.GetComponentInChildren<Animator>();
         _pressButtonOffset = PRESS_BUTTON_ANIMATION_LENGTH;
@@ -29,7 +31,7 @@ public class CharacterController : MonoBehaviour
     void Update()
     {
         OnAnimationSwitch();
-        if(!_isActionBlocked)
+        if(playerState != PlayerState.PressingButton)
         {
             OnSwitchCamera();
             OnPlayerWalk();
@@ -114,17 +116,15 @@ public class CharacterController : MonoBehaviour
             {
                 playerState = PlayerState.Idle;
                 _pressButtonOffset = PRESS_BUTTON_ANIMATION_LENGTH;
-                _isActionBlocked = false;
             }
         }
     }
     public void PressButton(Vector3 buttonDirection)
     {
-        if(playerState == PlayerState.Idle)
+        if(playerState != PlayerState.PressingButton)
         {
-            _isActionBlocked = true;
-            var angle = Vector3.Angle(transform.forward, buttonDirection) - 30;
-            transform.Rotate(Vector3.up, angle);
+            Vector3 lookAtPoint = new Vector3(buttonDirection.x, transform.position.y, buttonDirection.z);
+            transform.LookAt(lookAtPoint);
             playerState = PlayerState.PressingButton;
         }
     }
@@ -155,6 +155,15 @@ public class CharacterController : MonoBehaviour
                 if (animator.GetInteger("animation") != 0) animator.SetInteger("animation", 0);
                 break;
         }
+    }
+
+    // Health management methods
+    public void OnReceiveDamage(int amount)
+    {
+        var newHealth = health;
+        newHealth -= amount;
+        if(newHealth <0) newHealth = 0;
+        health = newHealth;
     }
 }
 

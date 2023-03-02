@@ -5,6 +5,7 @@ using UnityEngine.UIElements;
 
 public class TerminalScript : MonoBehaviour
 {
+    [SerializeField] private LevelManager levelManager;
     [SerializeField] private GameObject memberPartsInstantiator;
     [SerializeField] private GameObject corePartsInstantiator;
     [SerializeField] private GameObject[] memberPartsPrefabs;
@@ -55,6 +56,10 @@ public class TerminalScript : MonoBehaviour
     {
         Instantiate(memberPartsQueue.Dequeue(), memberPartsInstantiator.transform.position, memberPartsInstantiator.transform.rotation);
         Instantiate(corePartsQueue.Dequeue(), corePartsInstantiator.transform.position, corePartsInstantiator.transform.rotation);
+        if(memberPartsQueue.Count == 0 || corePartsQueue.Count == 0)
+        {
+            levelManager.SetLevelFirstMilestone();
+        }
     }
 
     private void FillRobotPartsQueues()
