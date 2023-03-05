@@ -3,25 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterController : MonoBehaviour
+public class CharacterController : RobotWithHealth
 {
     private static readonly float WALK_SPEED = 2f;
     private static readonly float RUN_SPEED = 4f;
     private static readonly float JUMP_MAGNITUDE = 5f;
     private static readonly float PRESS_BUTTON_ANIMATION_LENGTH = 2f;
     private static readonly float FALLING_VELOCITY_THRESHOLD = -1f;
-    private static readonly int INITIAL_HEALTH = 100;
 
     private PlayerState playerState = PlayerState.Idle;
     private Rigidbody rigidbody;
     private Animator animator;
-    private int health;
 
     private bool _alternativeCameraOn = false;
     private float _pressButtonOffset;
-    void Start()
+    protected override void Start()
     {
-        health = INITIAL_HEALTH;
+        base.Start();
         rigidbody = GetComponent<Rigidbody>();
         animator = gameObject.GetComponentInChildren<Animator>();
         _pressButtonOffset = PRESS_BUTTON_ANIMATION_LENGTH;
@@ -155,15 +153,6 @@ public class CharacterController : MonoBehaviour
                 if (animator.GetInteger("animation") != 0) animator.SetInteger("animation", 0);
                 break;
         }
-    }
-
-    // Health management methods
-    public void OnReceiveDamage(int amount)
-    {
-        var newHealth = health;
-        newHealth -= amount;
-        if(newHealth <0) newHealth = 0;
-        health = newHealth;
     }
 }
 
