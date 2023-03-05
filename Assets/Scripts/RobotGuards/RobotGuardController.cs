@@ -3,25 +3,21 @@ using System.Collections.Generic;
 using UnityEditor.PackageManager;
 using UnityEngine;
 
-public class RobotGuardController : MonoBehaviour
+public class RobotGuardController : PlayerSpotter
 {
     private static readonly float PUSH_INTENSITY = 5f;
 
-    private Animator animator;
     private GuardState guardState = GuardState.Idle;
-
-    private Vector3 _originalForward;
-    void Start()
+    protected override void Start()
     {
-        _originalForward = transform.forward;
-        animator = GetComponent<Animator>();
+        base.Start();
         var triggerCollider = GetComponent<CapsuleCollider>();
         triggerCollider.center += transform.forward * 0.05f;
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         OnAnimationChange();
     }
 
@@ -30,23 +26,23 @@ public class RobotGuardController : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             guardState = GuardState.GuardIdle;
+            SpotPlayer();
         }
     }
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            var l_guardLookPoint = new Vector3(other.transform.position.x, transform.position.y, other.transform.position.z);
-            transform.LookAt(l_guardLookPoint);
-            var distance = Vector3.Distance(transform.position, other.transform.position);
+            var distance = Vector3.Distance(transform.position, player.transform.position);
             if(distance <= 0.5f && guardState != GuardState.HeadbuttPush)
             {
                 guardState = GuardState.HeadbuttPush;
                 var l_playerLookPoint = transform.position;
-                l_playerLookPoint.y = other.transform.position.y;
-                other.attachedRigidbody.velocity = new Vector3(0, 0, 0);
-                other.attachedRigidbody.AddForce((other.transform.forward * -1) + Vector3.up * PUSH_INTENSITY, ForceMode.Impulse);
-                other.gameObject.GetComponent<CharacterController>().OnReceiveDamage(5);
+                l_playerLookPoint.y = player.transform.position.y;
+                var l_playerRB = player.GetComponent<Rigidbody>();
+                l_playerRB.velocity = new Vector3(0, 0, 0);
+                l_playerRB.AddForce((player.transform.forward * -1) + Vector3.up * PUSH_INTENSITY, ForceMode.Impulse);
+                player.OnReceiveDamage(5);
             }
             else if(guardState != GuardState.GuardIdle)
             {
@@ -59,8 +55,8 @@ public class RobotGuardController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            transform.LookAt(_originalForward);
             guardState = GuardState.Idle;
+            UnSpotlayer();
         }
     }
     private void OnAnimationChange()
