@@ -8,8 +8,8 @@ public class TerminalScript : MonoBehaviour
     [SerializeField] private LevelManager levelManager;
     [SerializeField] private GameObject memberPartsInstantiator;
     [SerializeField] private GameObject corePartsInstantiator;
-    [SerializeField] private GameObject[] memberPartsPrefabs;
-    [SerializeField] private GameObject[] corePartsPrefabs;
+    [SerializeField] private RobotPartsColetion memberPartsPrefabs;
+    [SerializeField] private RobotPartsColetion corePartsPrefabs;
     [SerializeField] private TutorialWorker[] workers;
     private Queue<GameObject> memberPartsQueue = new Queue<GameObject>();
     private Queue<GameObject> corePartsQueue = new Queue<GameObject>();
@@ -66,8 +66,8 @@ public class TerminalScript : MonoBehaviour
     {
         for(int i = 0; i < PARTS_PER_QUEUE; i++)
         {
-            memberPartsQueue.Enqueue(memberPartsPrefabs[Random.Range(0, memberPartsPrefabs.Length)]);
-            corePartsQueue.Enqueue(corePartsPrefabs[Random.Range(0, corePartsPrefabs.Length)]);
+            memberPartsQueue.Enqueue(memberPartsPrefabs.parts[Random.Range(0, memberPartsPrefabs.parts.Length)]);
+            corePartsQueue.Enqueue(corePartsPrefabs.parts[Random.Range(0, corePartsPrefabs.parts.Length)]);
         }
     }
 
