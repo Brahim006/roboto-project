@@ -2,31 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TutorialWorker : MonoBehaviour
+public class TutorialWorker : PlayerSpotter
 {
-    [SerializeField] private CharacterController player;
-    private Animator animator;
     private WorkerState workerState = WorkerState.Idle;
 
-    private bool _isRanting = false;
-    private Vector3 _originalForward;
-    void Start()
+    protected override void Start()
     {
-        animator = GetComponent<Animator>();
-        _originalForward = transform.forward;
+        base.Start();
     }
-
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         OnSwitchAnimation();
-        if(_isRanting)
-        {
-            transform.LookAt(player.transform.position);
-        }
-        else
-        {
-            transform.LookAt(_originalForward);
-        }
     }
 
     public void Rant()
@@ -44,13 +31,13 @@ public class TutorialWorker : MonoBehaviour
                 workerState = WorkerState.ShakingHeadNo;
                 break;
         }
-        _isRanting = true;
+        SpotPlayer();
     }
 
     public void StopRanting()
     {
         workerState = WorkerState.Idle;
-        _isRanting = false;
+        UnSpotlayer();
     }
 
     private void OnSwitchAnimation()
