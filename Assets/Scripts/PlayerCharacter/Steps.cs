@@ -4,27 +4,34 @@ using UnityEngine;
 
 public class Steps : MonoBehaviour
 {
-    private AudioSource audioSteps;
+    private AudioSource audioPlayer;
+    private AudioClip walking;
+    private AudioClip running;
     void Start()
     {
-        audioSteps = GetComponent<AudioSource>();
+        audioPlayer = GetComponent<AudioSource>();
     }
 
     void Update()
     {
         
     }
-
-    private void stopSteps()
+    public void StartWalking()
     {
-
-            audioSteps.Stop();
-        
+        audioPlayer.clip = walking;
+        audioPlayer.Play();
     }
 
-    private void startSteps()
+    public void StartRunning()
     {
-        
-            audioSteps.Play();
+        audioPlayer.clip = running;
+        audioPlayer.Play();
     }
+
+    public void StopAudio()
+    {
+        audioPlayer.Stop();
+        audioPlayer.clip = null;
+    }
+
 }
