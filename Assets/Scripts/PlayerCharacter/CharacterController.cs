@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class CharacterController : RobotWithHealt
@@ -18,12 +19,15 @@ public class CharacterController : RobotWithHealt
     private float _forwardRotationAngle;
     private float _pressButtonOffset;
     private bool _isActionBlocked = false;
+
+    [SerializeField] private CameraController cameraController;
     protected override void Start()
     {
         base.Start();
         rigidbody = GetComponent<Rigidbody>();
         animator = gameObject.GetComponentInChildren<Animator>();
         _pressButtonOffset = PRESS_BUTTON_ANIMATION_LENGTH;
+        cameraController.OnChangeFoward += ChangeForwardDirection;
     }
 
     // Update is called once per frame

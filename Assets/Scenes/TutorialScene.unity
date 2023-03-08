@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731715, g: 0.13414735, b: 0.121078536, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731704, g: 0.13414727, b: 0.121078536, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5844,7 +5844,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh53122
+  m_Name: pb_Mesh28992
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -6659,7 +6659,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9693999d2680f334180ed3d814a17e2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 589166742}
   intialCamera: {fileID: 1689165206}
   alternativeCamera: {fileID: 120300338}
 --- !u!1 &338304038
@@ -31776,7 +31775,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh53290
+  m_Name: pb_Mesh29186
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -34292,6 +34291,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7737071950773471025, guid: 04b5e449d42506040824c36153579f1d,
+        type: 3}
+      propertyPath: cameraController
+      value: 
+      objectReference: {fileID: 330585549}
     - target: {fileID: 7737071950773471025, guid: 04b5e449d42506040824c36153579f1d,
         type: 3}
       propertyPath: _forwardRotationAngle
