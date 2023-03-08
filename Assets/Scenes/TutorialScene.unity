@@ -25580,6 +25580,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e817d0425187e024d8dbd000c968d238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walking: {fileID: 8300000, guid: e2e7f2a0586e4e5428a96d574330e9d3, type: 3}
+  running: {fileID: 8300000, guid: 5f4a5c6c01cac4143bc777b09159eb22, type: 3}
+  character: {fileID: 589166742}
 --- !u!82 &1669792977
 AudioSource:
   m_ObjectHideFlags: 0

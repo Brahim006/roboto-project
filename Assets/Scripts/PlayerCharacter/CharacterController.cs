@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using UnityEngine.Events;
 using UnityEngine;
+
 
 public class CharacterController : RobotWithHealt
 {
@@ -19,6 +21,10 @@ public class CharacterController : RobotWithHealt
     private float _forwardRotationAngle;
     private float _pressButtonOffset;
     private bool _isActionBlocked = false;
+
+    public UnityEvent <bool> StartToWalking;
+    public UnityEvent<bool> StartToRunnig;
+    public UnityEvent<bool> StopMoving;
 
     [SerializeField] private CameraController cameraController;
     protected override void Start()
@@ -54,11 +60,13 @@ public class CharacterController : RobotWithHealt
             if(Input.GetKey(KeyCode.LeftShift))
             {
                 speed = RUN_SPEED;
+                if (playerState != PlayerState.Running) StartToRunnig?.Invoke(true);
                 playerState = PlayerState.Running;
             }
             else
             {
                 speed = WALK_SPEED;
+                if (playerState != PlayerState.Walking) StartToWalking?.Invoke(true);
                 playerState = PlayerState.Walking;
             }
 
@@ -70,6 +78,7 @@ public class CharacterController : RobotWithHealt
         } else if(playerState == PlayerState.Walking || playerState == PlayerState.Running)
         {
             playerState = PlayerState.Idle;
+            StopMoving?.Invoke(true);
         }
     }
 
