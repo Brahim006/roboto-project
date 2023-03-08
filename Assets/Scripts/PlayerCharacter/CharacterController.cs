@@ -17,6 +17,7 @@ public class CharacterController : RobotWithHealt
 
     private float _forwardRotationAngle;
     private float _pressButtonOffset;
+    private bool _isActionBlocked = false;
     protected override void Start()
     {
         base.Start();
@@ -29,7 +30,7 @@ public class CharacterController : RobotWithHealt
     void Update()
     {
         OnAnimationSwitch();
-        if(playerState != PlayerState.PressingButton)
+        if(!_isActionBlocked)
         {
             OnPlayerWalk();
             OnPlayerJump();
@@ -104,6 +105,7 @@ public class CharacterController : RobotWithHealt
             {
                 playerState = PlayerState.Idle;
                 _pressButtonOffset = PRESS_BUTTON_ANIMATION_LENGTH;
+                _isActionBlocked = false;
             }
         }
     }
@@ -120,6 +122,7 @@ public class CharacterController : RobotWithHealt
             Vector3 lookAtPoint = new Vector3(buttonDirection.x, transform.position.y, buttonDirection.z);
             transform.LookAt(lookAtPoint);
             playerState = PlayerState.PressingButton;
+            _isActionBlocked = true;
         }
     }
 
