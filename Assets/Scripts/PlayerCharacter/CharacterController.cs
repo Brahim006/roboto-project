@@ -15,7 +15,7 @@ public class CharacterController : RobotWithHealt
     private Rigidbody rigidbody;
     private Animator animator;
 
-    private bool _alternativeCameraOn = false;
+    private float _forwardRotationAngle;
     private float _pressButtonOffset;
     protected override void Start()
     {
@@ -31,7 +31,6 @@ public class CharacterController : RobotWithHealt
         OnAnimationSwitch();
         if(playerState != PlayerState.PressingButton)
         {
-            OnSwitchCamera();
             OnPlayerWalk();
             OnPlayerJump();
         }
@@ -57,24 +56,15 @@ public class CharacterController : RobotWithHealt
                 speed = WALK_SPEED;
                 playerState = PlayerState.Walking;
             }
-            var l_movementDirection =
-                _alternativeCameraOn ?
-                new Vector3(-1 * l_vertical, 0, l_horizontal)
-                : new Vector3(l_horizontal, 0, l_vertical);
+
+            var l_movementDirection = new Vector3(l_horizontal, 0, l_vertical);
+            l_movementDirection = Quaternion.AngleAxis(_forwardRotationAngle, Vector3.up) * l_movementDirection;
 
             transform.LookAt(transform.position + l_movementDirection);
             transform.position += l_movementDirection * speed * Time.deltaTime;
         } else if(playerState == PlayerState.Walking || playerState == PlayerState.Running)
         {
             playerState = PlayerState.Idle;
-        }
-    }
-
-    private void OnSwitchCamera()
-    {
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            _alternativeCameraOn = !_alternativeCameraOn;
         }
     }
 
@@ -116,6 +106,12 @@ public class CharacterController : RobotWithHealt
                 _pressButtonOffset = PRESS_BUTTON_ANIMATION_LENGTH;
             }
         }
+    }
+
+    public void ChangeForwardDirection(Vector3 newForward)
+    {
+        _forwardRotationAngle = Vector3.SignedAngle(Vector3.forward, newForward, Vector3.up);
+        Debug.Log(_forwardRotationAngle);
     }
     public void PressButton(Vector3 buttonDirection)
     {
