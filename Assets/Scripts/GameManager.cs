@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
 
     public void OnGameQuit()
     {
+        Debug.Log($"OnDeath recibido por {gameObject.name}");
         // TODO: Cambiar esto al buildear
         UnityEditor.EditorApplication.isPlaying = false;
     }

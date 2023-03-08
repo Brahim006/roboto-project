@@ -22,18 +22,21 @@ public class Steps : MonoBehaviour
     }
     public void StartWalking(bool audio)
     {
+        Debug.Log($"OnStartWalking recibido por {gameObject.name}");
         audioPlayer.clip = walking;
         audioPlayer.Play();
     }
 
     public void StartRunning(bool audio)
     {
+        Debug.Log($"OnStartRunning recibido por {gameObject.name}");
         audioPlayer.clip = running;
         audioPlayer.Play();
     }
 
     public void StopAudio(bool audio)
     {
+        Debug.Log($"OnStopMoving recibido por {gameObject.name}");
         audioPlayer.Stop();
         audioPlayer.clip = null;
     }

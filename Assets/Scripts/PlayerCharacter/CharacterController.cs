@@ -57,13 +57,21 @@ public class CharacterController : RobotWithHealt
             if(Input.GetKey(KeyCode.LeftShift))
             {
                 speed = RUN_SPEED;
-                if (playerState != PlayerState.Running) OnStartRunning?.Invoke(true);
+                if (playerState != PlayerState.Running)
+                {
+                    OnStartRunning?.Invoke(true);
+                    Debug.Log($"OnStartRunning llamado por {gameObject.name}");
+                }
                 playerState = PlayerState.Running;
             }
             else
             {
                 speed = WALK_SPEED;
-                if(playerState != PlayerState.Walking) OnStartWalking?.Invoke(true);
+                if(playerState != PlayerState.Walking)
+                {
+                    OnStartWalking?.Invoke(true);
+                    Debug.Log($"OnStartWalking llamado por {gameObject.name}");
+                }
                 playerState = PlayerState.Walking;
             }
 
@@ -76,6 +84,7 @@ public class CharacterController : RobotWithHealt
         {
             playerState = PlayerState.Idle;
             OnStopMoving?.Invoke(true);
+            Debug.Log($"OnStopMoving llamado por {gameObject.name}");
         }
     }
 
@@ -122,6 +131,7 @@ public class CharacterController : RobotWithHealt
 
     private void ChangeForwardDirection(Vector3 newForward)
     {
+        Debug.Log($"OnForwardChange recibido por {gameObject.name}");
         _forwardRotationAngle = Vector3.SignedAngle(Vector3.forward, newForward, Vector3.up);
     }
     public void PressButton(Vector3 buttonDirection)

@@ -46,5 +46,6 @@ public class HUDManager : MonoBehaviour
         {
             healthBar.value = health;
         }
+        Debug.Log($"OnHealthChange recibido por {gameObject.name}");
     }
 }

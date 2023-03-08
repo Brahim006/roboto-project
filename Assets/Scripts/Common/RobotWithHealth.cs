@@ -32,12 +32,14 @@ public abstract class RobotWithHealt : MonoBehaviour
         {
             health = MIN_HEALTH;
             OnDeath?.Invoke();
+            Debug.Log($"OnDeath llamado por {gameObject.name}");
         }
         else
         {
             health = newHealthValue;
         }
         OnHealthChange?.Invoke(health);
+        Debug.Log($"OnHealthChange llamado por {gameObject.name}");
     }
 
     public void OnHeal(int healAmount)
