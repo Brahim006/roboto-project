@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,8 @@ public abstract class RobotWithHealt : MonoBehaviour
 {
     private static readonly int MAX_HEALTH = 100;
     private static readonly int MIN_HEALTH = 0;
+
+    public static event Action<int> OnHealthChange; 
 
     private int health;
     protected virtual void Start()
@@ -32,6 +35,7 @@ public abstract class RobotWithHealt : MonoBehaviour
         {
             health = newHealthValue;
         }
+        OnHealthChange?.Invoke(health);
     }
 
     public void OnHeal(int healAmount)
