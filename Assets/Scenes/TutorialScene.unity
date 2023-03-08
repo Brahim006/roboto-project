@@ -240,7 +240,7 @@ RectTransform:
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 96, y: -8}
   m_SizeDelta: {x: 0, y: 14.999998}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3063,7 +3063,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh54020
+  m_Name: pb_Mesh29932
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -6659,7 +6659,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9693999d2680f334180ed3d814a17e2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 589166742}
   intialCamera: {fileID: 1689165206}
   alternativeCamera: {fileID: 120300338}
 --- !u!1 &338304038
@@ -12791,7 +12790,7 @@ RectTransform:
   m_Father: {fileID: 1021349289}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 318, y: -104}
   m_SizeDelta: {x: 560.0824, y: 130}
@@ -15529,7 +15528,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2be5c021f1d52884f8d33ad25233662c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 589166742}
   healthBar: {fileID: 1985763231}
 --- !u!1 &1021498995
 GameObject:
@@ -31971,7 +31969,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -8, y: -11}
+  m_AnchoredPosition: {x: -8, y: 433}
   m_SizeDelta: {x: 510, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1985763231
@@ -32015,13 +32013,13 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
-  m_FillRect: {fileID: 0}
+  m_FillRect: {fileID: 19264493}
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -34293,6 +34291,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7737071950773471025, guid: 04b5e449d42506040824c36153579f1d,
+        type: 3}
+      propertyPath: cameraController
+      value: 
+      objectReference: {fileID: 330585549}
     - target: {fileID: 7737071950773471025, guid: 04b5e449d42506040824c36153579f1d,
         type: 3}
       propertyPath: _forwardRotationAngle

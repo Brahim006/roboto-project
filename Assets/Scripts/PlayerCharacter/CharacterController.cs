@@ -11,6 +11,7 @@ public class CharacterController : RobotWithHealt
     private static readonly float PRESS_BUTTON_ANIMATION_LENGTH = 2f;
     private static readonly float FALLING_VELOCITY_THRESHOLD = -1f;
 
+    [SerializeField] private CameraController cameraController;
     private PlayerState playerState = PlayerState.Idle;
     private Rigidbody rigidbody;
     private Animator animator;
@@ -21,6 +22,7 @@ public class CharacterController : RobotWithHealt
     protected override void Start()
     {
         base.Start();
+        cameraController.OnForwardChange += ChangeForwardDirection;
         rigidbody = GetComponent<Rigidbody>();
         animator = gameObject.GetComponentInChildren<Animator>();
         _pressButtonOffset = PRESS_BUTTON_ANIMATION_LENGTH;
@@ -110,10 +112,9 @@ public class CharacterController : RobotWithHealt
         }
     }
 
-    public void ChangeForwardDirection(Vector3 newForward)
+    private void ChangeForwardDirection(Vector3 newForward)
     {
         _forwardRotationAngle = Vector3.SignedAngle(Vector3.forward, newForward, Vector3.up);
-        Debug.Log(_forwardRotationAngle);
     }
     public void PressButton(Vector3 buttonDirection)
     {
