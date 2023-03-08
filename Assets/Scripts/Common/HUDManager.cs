@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using UnityEngine.UI;
 
 public class HUDManager : MonoBehaviour
@@ -28,6 +29,7 @@ public class HUDManager : MonoBehaviour
         healthBar.minValue = MIN_HEALTH_VALUE;
         healthBar.maxValue = MAX_HEALTH_VALUE;
         healthBar.value = MAX_HEALTH_VALUE;
+        CharacterController.OnHealthChange += SetHealth;
     }
 
     public void SetHealth(int health)
