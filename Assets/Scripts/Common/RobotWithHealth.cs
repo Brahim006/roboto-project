@@ -8,7 +8,8 @@ public abstract class RobotWithHealt : MonoBehaviour
     private static readonly int MAX_HEALTH = 100;
     private static readonly int MIN_HEALTH = 0;
 
-    public static event Action<int> OnHealthChange; 
+    public static event Action<int> OnHealthChange;
+    public static event Action OnDeath;
 
     private int health;
     protected virtual void Start()
@@ -30,6 +31,7 @@ public abstract class RobotWithHealt : MonoBehaviour
         else if(newHealthValue < MIN_HEALTH)
         {
             health = MIN_HEALTH;
+            OnDeath?.Invoke();
         }
         else
         {

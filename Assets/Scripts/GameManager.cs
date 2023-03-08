@@ -19,6 +19,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        CharacterController.OnDeath += OnGameQuit;
+    }
+
     public void OnGameQuit()
     {
         // TODO: Cambiar esto al buildear
