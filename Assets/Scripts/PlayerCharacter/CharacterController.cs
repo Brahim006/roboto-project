@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CharacterController : RobotWithHealt
 {
@@ -15,6 +16,10 @@ public class CharacterController : RobotWithHealt
     private PlayerState playerState = PlayerState.Idle;
     private Rigidbody rigidbody;
     private Animator animator;
+
+    public UnityEvent<bool> OnStartWalking;
+    public UnityEvent<bool> OnStartRunning;
+    public UnityEvent<bool> OnStopMoving;
 
     private float _forwardRotationAngle;
     private float _pressButtonOffset;
@@ -52,11 +57,13 @@ public class CharacterController : RobotWithHealt
             if(Input.GetKey(KeyCode.LeftShift))
             {
                 speed = RUN_SPEED;
+                if (playerState != PlayerState.Running) OnStartRunning?.Invoke(true);
                 playerState = PlayerState.Running;
             }
             else
             {
                 speed = WALK_SPEED;
+                if(playerState != PlayerState.Walking) OnStartWalking?.Invoke(true);
                 playerState = PlayerState.Walking;
             }
 
@@ -68,6 +75,7 @@ public class CharacterController : RobotWithHealt
         } else if(playerState == PlayerState.Walking || playerState == PlayerState.Running)
         {
             playerState = PlayerState.Idle;
+            OnStopMoving?.Invoke(true);
         }
     }
 
