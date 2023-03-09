@@ -30,6 +30,8 @@ public class CameraController : MonoBehaviour
                 alternativeCamera.gameObject.SetActive(false);
                 OnChangeFoward?.Invoke(Vector3.forward);
             }
+            Debug.Log($"OnForwardChange es llamado por {gameObject.name}");
         }
     }
+
 }

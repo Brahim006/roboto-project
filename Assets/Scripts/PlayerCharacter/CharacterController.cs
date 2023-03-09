@@ -58,15 +58,17 @@ public class CharacterController : RobotWithHealt
         {
             float speed;
             if(Input.GetKey(KeyCode.LeftShift))
-            {
+            {   
                 speed = RUN_SPEED;
                 if (playerState != PlayerState.Running) StartToRunnig?.Invoke(true);
+                Debug.Log($"StartToRunning llamado por {gameObject.name}");
                 playerState = PlayerState.Running;
             }
             else
             {
                 speed = WALK_SPEED;
                 if (playerState != PlayerState.Walking) StartToWalking?.Invoke(true);
+                Debug.Log($"StartToWalking llamado por {gameObject.name}");
                 playerState = PlayerState.Walking;
             }
 
@@ -79,6 +81,7 @@ public class CharacterController : RobotWithHealt
         {
             playerState = PlayerState.Idle;
             StopMoving?.Invoke(true);
+            Debug.Log($"StopMoving llamado por {gameObject.name}");
         }
     }
 

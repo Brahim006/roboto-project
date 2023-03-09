@@ -27,5 +27,7 @@ public class GameManager : MonoBehaviour
     {
         // TODO: Cambiar esto al buildear
         UnityEditor.EditorApplication.isPlaying = false;
+
+        Debug.Log($"death recibido por {gameObject.name}");
     }
 }
