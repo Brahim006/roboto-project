@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class LevelManager : MonoBehaviour
 {
     private LevelManager instance;
+    [SerializeField] Volume volume;
 
     [SerializeField] GameObject secondFloor;
     [SerializeField] GameObject workerLegless;
@@ -50,6 +53,7 @@ public class LevelManager : MonoBehaviour
     public void SetLevelFirstMilestone()
     {
         stuckHead.SetActive(true);
+        ToggleRedLights(true);
     }
 
     public void SetLevelSecondMilestone()
@@ -58,6 +62,7 @@ public class LevelManager : MonoBehaviour
         stuckHead.SetActive(false);
         guard.transform.position = GUARD_FINAL_POSITION;
         guard.transform.Rotate(Vector3.up, ADD_TO_GUARD_FINAL_ROTATION);
+        ToggleRedLights(false);
     }
 
     public void OnTutorialLevelCompletion()
@@ -105,6 +110,15 @@ public class LevelManager : MonoBehaviour
         if(secondFloor.active)
         {
             secondFloor.SetActive(false);
+        }
+    }
+
+    private void ToggleRedLights(bool active)
+    {
+        var profileLights = volume.profile;
+        if (profileLights.TryGet(out Bloom bloom))
+        {
+            bloom.tint.overrideState= active;
         }
     }
 }
