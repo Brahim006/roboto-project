@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class LevelManager : MonoBehaviour
 {
     private LevelManager instance;
 
+    [SerializeField] Volume globalVolume;
     [SerializeField] GameObject secondFloor;
     [SerializeField] GameObject workerLegless;
     [SerializeField] GameObject guard;
@@ -50,6 +53,7 @@ public class LevelManager : MonoBehaviour
     public void SetLevelFirstMilestone()
     {
         stuckHead.SetActive(true);
+        ToggleGlobalVolumeStatus(false);
     }
 
     public void SetLevelSecondMilestone()
@@ -58,6 +62,7 @@ public class LevelManager : MonoBehaviour
         stuckHead.SetActive(false);
         guard.transform.position = GUARD_FINAL_POSITION;
         guard.transform.Rotate(Vector3.up, ADD_TO_GUARD_FINAL_ROTATION);
+        ToggleGlobalVolumeStatus(true);
     }
 
     public void OnTutorialLevelCompletion()
@@ -105,6 +110,19 @@ public class LevelManager : MonoBehaviour
         if(secondFloor.active)
         {
             secondFloor.SetActive(false);
+        }
+    }
+
+    private void ToggleGlobalVolumeStatus(bool original)
+    {
+        var l_volumeProfile = globalVolume.profile;
+        if (l_volumeProfile.TryGet(out ColorAdjustments colorAdjustments))
+        {
+            colorAdjustments.colorFilter.overrideState = !original;
+        }
+        if (l_volumeProfile.TryGet(out Bloom bloom))
+        {
+            bloom.tint.overrideState = !original;
         }
     }
 }
