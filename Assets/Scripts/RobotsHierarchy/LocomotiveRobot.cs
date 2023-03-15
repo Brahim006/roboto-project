@@ -7,6 +7,7 @@ public abstract class LocomotiveRobot : RobotWithSounds
 {
     private static readonly float WALK_SPEED = 2f;
     private static readonly float RUN_SPEED = 4f;
+    private static readonly float ROTATION_SPEED = 90f;
 
     private Animator animator;
 
@@ -23,7 +24,7 @@ public abstract class LocomotiveRobot : RobotWithSounds
         OnAnimationSwitch();
     }
 
-    protected void OnRobotWalk(Vector3 direction, bool running)
+    protected void OnRobotWalk(float verticalAxis, float horizontalAxis, bool running)
     {
         float speed;
         if (running)
@@ -36,7 +37,15 @@ public abstract class LocomotiveRobot : RobotWithSounds
             speed = WALK_SPEED;
             animationState = AnimationState.Walking;
         }
-        transform.position += direction * speed * Time.deltaTime;
+
+        if (verticalAxis != 0)
+        {
+            transform.position += transform.forward * verticalAxis * speed * Time.deltaTime;
+        }
+        if (horizontalAxis != 0)
+        {
+            transform.Rotate(Vector3.up, horizontalAxis * ROTATION_SPEED * Time.deltaTime);
+        }
     }
 
     protected enum AnimationState

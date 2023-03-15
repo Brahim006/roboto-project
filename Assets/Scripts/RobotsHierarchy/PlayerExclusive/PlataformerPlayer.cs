@@ -10,7 +10,6 @@ public class PlataformerPlayer : LocomotiveRobot
 
     private Rigidbody rigidbody;
 
-    private float _forwardRotationAngle;
     private float _pressButtonOffset;
     private bool _isActionBlocked = false;
     protected override void Start()
@@ -41,10 +40,7 @@ public class PlataformerPlayer : LocomotiveRobot
         {
             bool l_isRunning = Input.GetKey(KeyCode.LeftShift);
 
-            var l_movementDirection = new Vector3(l_horizontal, 0, l_vertical);
-            l_movementDirection = Quaternion.AngleAxis(_forwardRotationAngle, Vector3.up) * l_movementDirection;
-
-            OnRobotWalk(l_movementDirection, l_isRunning);
+            OnRobotWalk(l_vertical, l_horizontal, l_isRunning);
         }
         else if (animationState == AnimationState.Walking || animationState == AnimationState.Running)
         {
@@ -93,11 +89,6 @@ public class PlataformerPlayer : LocomotiveRobot
         }
     }
 
-    public void ChangeForwardDirection(Vector3 newForward)
-    {
-        _forwardRotationAngle = Vector3.SignedAngle(Vector3.forward, newForward, Vector3.up);
-        Debug.Log(_forwardRotationAngle);
-    }
     public void PressButton(Vector3 buttonDirection)
     {
         if (animationState != AnimationState.PressingButton)

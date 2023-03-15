@@ -6,7 +6,6 @@ public class LevelManager : MonoBehaviour
 {
     private LevelManager instance;
 
-    [SerializeField] GameObject secondFloor;
     [SerializeField] GameObject workerLegless;
     [SerializeField] GameObject guard;
     [SerializeField] GameObject stuckHead;
@@ -35,7 +34,6 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         _timeOffset = LIGHT_TOGGLE_TIME;
-        secondFloor.SetActive(false);
         thirdFloorLightA.intensity = LIGHT_INTENSITY;
         thirdFloorLightB.intensity = 0;
         workerLegless.SetActive(false);
@@ -89,22 +87,6 @@ public class LevelManager : MonoBehaviour
                 thirdFloorLightA.intensity = 0;
                 thirdFloorLightB.intensity = LIGHT_INTENSITY;
             }
-        }
-    }
-
-    public void ActivateSecondFloor()
-    {
-        if(!secondFloor.active)
-        {
-            secondFloor.SetActive(true);
-        }
-    }
-
-    public void DisableSecondFloor()
-    {
-        if(secondFloor.active)
-        {
-            secondFloor.SetActive(false);
         }
     }
 }
