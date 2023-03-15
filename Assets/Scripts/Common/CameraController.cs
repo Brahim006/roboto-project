@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] CharacterController player;
+    [SerializeField] PlataformerPlayer player;
     [SerializeField] private CinemachineVirtualCamera intialCamera;
     [SerializeField] private CinemachineVirtualCamera alternativeCamera;
     void Start()

@@ -6,7 +6,7 @@ public abstract class PlayerSpotter : MonoBehaviour
 {
     private static readonly float LERP_INTENSITY = 3.0f;
 
-    [SerializeField] protected CharacterController player;
+    [SerializeField] protected PlataformerPlayer player;
     protected Animator animator;
 
     protected Vector3 _originalForward;

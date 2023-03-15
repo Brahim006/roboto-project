@@ -13,12 +13,7 @@ public abstract class RobotWithHealt : MonoBehaviour
         health = MAX_HEALTH;
     }
 
-    public void InitHealth(int initialHealth)
-    {
-        SetHealth(initialHealth);
-    }
-
-    private void SetHealth(int newHealthValue)
+    protected void SetHealth(int newHealthValue)
     {
         if(newHealthValue > MAX_HEALTH) 
         { 
@@ -34,12 +29,12 @@ public abstract class RobotWithHealt : MonoBehaviour
         }
     }
 
-    public void OnHeal(int healAmount)
+    protected void OnHeal(int healAmount)
     {
         SetHealth(health + healAmount);
     }
 
-    public void OnReceiveDamage(int damage)
+    protected void OnReceiveDamage(int damage)
     {
         SetHealth(health - damage);
     }

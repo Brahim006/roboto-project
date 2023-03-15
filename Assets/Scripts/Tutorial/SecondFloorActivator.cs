@@ -7,7 +7,7 @@ public class SecondFloorActivator : MonoBehaviour
     [SerializeField] LevelManager levelManager;
     private void OnTriggerEnter(Collider other)
     {
-        if(other.TryGetComponent<CharacterController>(out CharacterController player))
+        if(other.TryGetComponent<PlataformerPlayer>(out PlataformerPlayer player))
         {
             levelManager.ActivateSecondFloor();
         }
