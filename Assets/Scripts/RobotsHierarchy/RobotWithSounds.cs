@@ -5,23 +5,23 @@ using UnityEngine;
 public abstract class RobotWithSounds : RobotWithHealt
 {
     protected AudioSource audioPlayer;
-    [SerializeField] private AudioClip walkingSoundClip;
-    [SerializeField] private AudioClip runningSoundClip;
+    [SerializeField] private AudioClip quickWalkSoundClip;
+    [SerializeField] private AudioClip smoothWalkSoundClip;
     protected virtual void Start()
     {
         base.Start();
         audioPlayer = GetComponent<AudioSource>();
     }
 
-    protected void PlayWalkingClip()
+    protected void PlayQuickWalkClip()
     {
-        audioPlayer.clip = walkingSoundClip;
+        audioPlayer.clip = quickWalkSoundClip;
         audioPlayer.Play();
     }
 
-    protected void PlayRunningClip()
+    protected void PlaySmoothWalkClip()
     {
-        audioPlayer.clip = runningSoundClip;
+        audioPlayer.clip = smoothWalkSoundClip;
         audioPlayer.Play();
     }
 
