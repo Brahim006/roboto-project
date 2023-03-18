@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.Playables;
 
 public class PlataformerPlayer : LocomotiveRobot
 {
     private static readonly float JUMP_MAGNITUDE = 5f;
-    private static readonly float PRESS_BUTTON_ANIMATION_LENGTH = 2f;
+    private static readonly float PRESS_BUTTON_ANIMATION_LENGTH = 3f;
     private static readonly float FALLING_VELOCITY_THRESHOLD = -1f;
 
     private Rigidbody rigidbody;
@@ -21,13 +22,18 @@ public class PlataformerPlayer : LocomotiveRobot
         _pressButtonOffset = PRESS_BUTTON_ANIMATION_LENGTH;
     }
 
-    protected void Update()
+    protected override void Update()
     {
-        CheckForFallingState();
-        if(!_isFalling)
+        base.Update();
+        OnPlayerPressingButton();
+        if (!_isActionBlocked)
         {
-            OnPlayerWalk();
-            OnPlayerJump();
+            CheckForFallingState();
+            if(!_isFalling)
+            {
+                OnPlayerWalk();
+                OnPlayerJump();
+            }
         }
     }
 
@@ -80,27 +86,20 @@ public class PlataformerPlayer : LocomotiveRobot
 
     private void OnPlayerPressingButton()
     {
-        /*if (animationState == AnimationState.PressingButton)
+        _pressButtonOffset -= Time.deltaTime;
+        if (_pressButtonOffset <= 0)
         {
-            _pressButtonOffset -= Time.deltaTime;
-            if (_pressButtonOffset <= 0)
-            {
-                animationState = AnimationState.Idle;
-                _pressButtonOffset = PRESS_BUTTON_ANIMATION_LENGTH;
-                _isActionBlocked = false;
-            }
-        }*/
+            _pressButtonOffset = PRESS_BUTTON_ANIMATION_LENGTH;
+            _isActionBlocked = false;
+            StopLookingAt();
+        }
     }
 
     public void PressButton(Vector3 buttonDirection)
     {
-        /*if (animationState != AnimationState.PressingButton)
-        {
-            Vector3 lookAtPoint = new Vector3(buttonDirection.x, transform.position.y, buttonDirection.z);
-            transform.LookAt(lookAtPoint);
-            animationState = AnimationState.PressingButton;
-            _isActionBlocked = true;
-        }*/
+        _isActionBlocked = true;
+        LookAtTarget(buttonDirection);
+        animator.SetTrigger("pressButton");
     }
 
     public void OnReceiveDamage(int amount)
