@@ -27,10 +27,22 @@ public class PlataformerPlayer : LocomotiveRobot
 
     private void OnPlayerWalk()
     {
-        OnRobotMove(
+        var l_vertical = Input.GetAxisRaw("Vertical");
+        if(l_vertical != 0)
+        {
+            OnRobotMove(
+            Input.GetAxisRaw("Vertical"),
+            Input.GetAxis("Horizontal")
+            );
+        }
+        else
+        {
+            OnRobotMove(
             Input.GetAxisRaw("Vertical"),
             Input.GetAxisRaw("Horizontal")
             );
+        }
+        
     }
 
     private void OnPlayerJump()
