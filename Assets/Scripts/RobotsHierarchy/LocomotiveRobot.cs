@@ -9,7 +9,7 @@ public abstract class LocomotiveRobot : RobotWithSounds
     private static readonly float BACKWARDS_SPEED = 1.5f;
     private static readonly float ROTATION_SPEED = 90f;
 
-    private Animator animator;
+    protected Animator animator;
     
     protected virtual void Start()
     {

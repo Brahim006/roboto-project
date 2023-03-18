@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class PlataformerPlayer : LocomotiveRobot
 {
@@ -10,6 +11,7 @@ public class PlataformerPlayer : LocomotiveRobot
 
     private Rigidbody rigidbody;
 
+    private bool _isFalling = false;
     private float _pressButtonOffset;
     private bool _isActionBlocked = false;
     protected override void Start()
@@ -21,8 +23,12 @@ public class PlataformerPlayer : LocomotiveRobot
 
     protected void Update()
     {
-        OnPlayerWalk();
-        OnPlayerJump();
+        CheckForFallingState();
+        if(!_isFalling)
+        {
+            OnPlayerWalk();
+            OnPlayerJump();
+        }
     }
 
     private void OnPlayerWalk()
@@ -47,19 +53,29 @@ public class PlataformerPlayer : LocomotiveRobot
 
     private void OnPlayerJump()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (!_isFalling && Input.GetKeyDown(KeyCode.Space))
         {
-            Physics.Raycast(transform.position + Vector3.up, Vector3.down, out RaycastHit hitInfo);
-            if (hitInfo.distance < 1.1)
-            {
-                rigidbody.AddForceAtPosition(Vector3.up * JUMP_MAGNITUDE, transform.position, ForceMode.Impulse);
-            }
+            var l_vertical = Input.GetAxisRaw("Vertical");
+            Vector3 l_jumpDirection = (transform.forward * l_vertical) + Vector3.up;
+            rigidbody.AddForceAtPosition(l_jumpDirection * JUMP_MAGNITUDE, transform.position, ForceMode.Impulse);
+            animator.SetTrigger("jumps");
         }
     }
 
     private void CheckForFallingState()
     {
-        var velocity = rigidbody.velocity.y;
+        if (rigidbody.velocity.y < FALLING_VELOCITY_THRESHOLD)
+        {
+            // Está cayendo
+            _isFalling = true;
+            animator.SetBool("isFalling", true);
+        }
+        else
+        {
+            // No está cayendo
+            _isFalling = false;
+            animator.SetBool("isFalling", false);
+        }
     }
 
     private void OnPlayerPressingButton()
