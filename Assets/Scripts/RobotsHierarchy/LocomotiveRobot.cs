@@ -29,7 +29,7 @@ public abstract class LocomotiveRobot : RobotWithSounds
             OnRobotLerping();
         }
     }
-    protected void OnRobotMove(float verticalAxis, float horizontalAxis)
+    protected virtual void OnRobotMove(float verticalAxis, float horizontalAxis)
     {
         animator.SetFloat("vertical", verticalAxis);
         animator.SetFloat("horizontal", horizontalAxis);
