@@ -7,10 +7,12 @@ public abstract class CombativeRobot : LocomotiveRobot
 {
     private static readonly float COMBAT_MOVEMENT_SPEED = 2.5f;
 
-    private Transform target = null;
+    protected Transform target = null;
+    private int _combatLayerIndex;
     protected virtual void Start()
     {
         base.Start();
+        _combatLayerIndex = animator.GetLayerIndex("Combat");
     }
 
     protected virtual void Update()
@@ -21,12 +23,17 @@ public abstract class CombativeRobot : LocomotiveRobot
     protected void SetTarget(Transform newTarget)
     {
         target = newTarget;
+        if(animator.GetLayerWeight(_combatLayerIndex) != 1)
+        {
+            animator.SetLayerWeight(_combatLayerIndex, 1);
+        }
     }
 
     protected void UnTarget()
     {
         target = null;
         StopLookingAt();
+        animator.SetLayerWeight(_combatLayerIndex, 0);
     }
 
     protected virtual void OnRobotMove(float verticalAxis, float horizontalAxis)
@@ -37,10 +44,12 @@ public abstract class CombativeRobot : LocomotiveRobot
         }
         else
         {
+            animator.SetFloat("vertical", verticalAxis);
+            animator.SetFloat("horizontal", horizontalAxis);
             Vector3 l_targetPosition = target.position;
             l_targetPosition.y = transform.position.y;
             LookAtTarget(l_targetPosition);
-            if(verticalAxis != 0)
+            if (verticalAxis != 0)
             {
                 transform.position += transform.forward * verticalAxis * COMBAT_MOVEMENT_SPEED * Time.deltaTime;
             }
