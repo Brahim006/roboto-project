@@ -6,12 +6,14 @@ public class CombatantPlayer : CombativeRobot
 {
     private static readonly float JUMP_MAGNITUDE = 5f;
     private static readonly float FALLING_VELOCITY_THRESHOLD = -1f;
+    private static readonly int BLOCKING_DIVIDER = 2;
 
     [SerializeField] private Transform testTarget;
 
     private Rigidbody rigidbody;
 
     private bool _isFalling = false;
+    private bool _isBlocking = false;
     private bool _isMovementBlocked = false;
     protected override void Start()
     {
@@ -38,6 +40,11 @@ public class CombatantPlayer : CombativeRobot
                     UnTarget();
                 }
             }
+        }
+        // Fighting Exclusive
+        if(target != null)
+        {
+            checkForBlockingState();
         }
     }
 
@@ -91,9 +98,31 @@ public class CombatantPlayer : CombativeRobot
         }
     }
 
+    private void checkForBlockingState()
+    {
+        if(Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            _isBlocking = _isMovementBlocked = true;
+            animator.SetBool("isBlocking", true);
+        }
+        if(Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            _isBlocking = _isMovementBlocked = false;
+            animator.SetBool("isBlocking", false);
+        }
+    }
+
     public void OnReceiveDamage(int amount)
     {
-        base.OnReceiveDamage(amount);
+        animator.SetTrigger("beingHit");
+        if(_isBlocking)
+        {
+            base.OnReceiveDamage((int) Mathf.Floor(amount / BLOCKING_DIVIDER));
+        }
+        else
+        {
+            base.OnReceiveDamage(amount);
+        }
         // TODO: Implementar animaciones de golpes
     }
 }
