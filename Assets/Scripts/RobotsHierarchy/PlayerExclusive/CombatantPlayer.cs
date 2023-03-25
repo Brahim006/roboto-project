@@ -8,17 +8,17 @@ public class CombatantPlayer : CombativeRobot
     private static readonly float JUMP_MAGNITUDE = 5f;
     private static readonly float FALLING_VELOCITY_THRESHOLD = -1f;
     private static readonly int BLOCKING_DIVIDER = 2;
-    private static readonly float ATTACK_COOLDOWN = 2f;
+    private static readonly float NEXT_ATTACK_COOLDOWN = 1f;
 
     [SerializeField] private Transform testTarget;
 
     private Rigidbody rigidbody;
 
-    private float _attackOffset = ATTACK_COOLDOWN;
     private int lightAttackIndex = 0;
-    private bool _heavyAttack = false;
+    private float _nextAttackOffset = NEXT_ATTACK_COOLDOWN;
     private bool _isFalling = false;
     private bool _isBlocking = false;
+    private bool _isAttacking;
     private bool _isMovementBlocked = false;
     protected override void Start()
     {
@@ -51,11 +51,9 @@ public class CombatantPlayer : CombativeRobot
             // Fighting exclusive
             if(target != null)
             {
-                if(!_isMovementBlocked)
-                {
-                    OnPlayerAttack();
-                }
+                OnPlayerAttack();
                 checkForBlockingState();
+                CheckForAttackingState();
             }
         }
     }
@@ -96,13 +94,37 @@ public class CombatantPlayer : CombativeRobot
 
     private void OnPlayerAttack()
     {
-        if (Input.GetMouseButtonDown(0)) // Light attack
+        if (Input.GetMouseButtonDown(0))
         {
+            if(!_isAttacking)
+            {
+                _isAttacking = true;
+                _isMovementBlocked = true;
+                animator.SetBool("isAttacking", true);
+            }
             lightAttackIndex++;
+            if(lightAttackIndex > 4)
+            {
+                lightAttackIndex = 1;
+            }
+            _nextAttackOffset = NEXT_ATTACK_COOLDOWN;
+            animator.SetInteger("lightAttacks", lightAttackIndex);
         }
-        else if(Input.GetMouseButtonDown(1)) // HeavyAttack
+    }
+
+    private void CheckForAttackingState()
+    {
+        if(_isAttacking)
         {
-            _heavyAttack = true;
+            _nextAttackOffset -= Time.deltaTime;
+            if(_nextAttackOffset <= 0)
+            {
+                _isAttacking = false;
+                _isMovementBlocked = false;
+                lightAttackIndex = 0;
+                animator.SetBool("isAttacking", false);
+                animator.SetInteger("lightAttacks", lightAttackIndex);
+            }
         }
     }
 
