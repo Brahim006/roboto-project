@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CombatantPlayer : CombativeRobot
@@ -7,11 +8,15 @@ public class CombatantPlayer : CombativeRobot
     private static readonly float JUMP_MAGNITUDE = 5f;
     private static readonly float FALLING_VELOCITY_THRESHOLD = -1f;
     private static readonly int BLOCKING_DIVIDER = 2;
+    private static readonly float ATTACK_COOLDOWN = 2f;
 
     [SerializeField] private Transform testTarget;
 
     private Rigidbody rigidbody;
 
+    private float _attackOffset = ATTACK_COOLDOWN;
+    private int lightAttackIndex = 0;
+    private bool _heavyAttack = false;
     private bool _isFalling = false;
     private bool _isBlocking = false;
     private bool _isMovementBlocked = false;
@@ -25,10 +30,13 @@ public class CombatantPlayer : CombativeRobot
     {
         base.Update();
         CheckForFallingState();
-        if (!_isFalling && !_isMovementBlocked)
+        if (!_isFalling)
         {
-            OnPlayerWalk();
-            OnPlayerJump();
+            if(!_isMovementBlocked)
+            {
+                OnPlayerWalk();
+                OnPlayerJump();
+            }
             if(Input.GetKeyDown(KeyCode.Tab))
             {
                 if(target is null)
@@ -40,11 +48,15 @@ public class CombatantPlayer : CombativeRobot
                     UnTarget();
                 }
             }
-        }
-        // Fighting Exclusive
-        if(target != null)
-        {
-            checkForBlockingState();
+            // Fighting exclusive
+            if(target != null)
+            {
+                if(!_isMovementBlocked)
+                {
+                    OnPlayerAttack();
+                }
+                checkForBlockingState();
+            }
         }
     }
 
@@ -79,6 +91,18 @@ public class CombatantPlayer : CombativeRobot
                 rigidbody.AddForceAtPosition(l_jumpDirection * JUMP_MAGNITUDE, transform.position, ForceMode.Impulse);
                 animator.SetTrigger("jumps");
             }
+        }
+    }
+
+    private void OnPlayerAttack()
+    {
+        if (Input.GetMouseButtonDown(0)) // Light attack
+        {
+            lightAttackIndex++;
+        }
+        else if(Input.GetMouseButtonDown(1)) // HeavyAttack
+        {
+            _heavyAttack = true;
         }
     }
 

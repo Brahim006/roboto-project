@@ -8,7 +8,7 @@ public abstract class CombativeRobot : LocomotiveRobot
     private static readonly float COMBAT_MOVEMENT_SPEED = 2.5f;
 
     protected Transform target = null;
-    private int _combatLayerIndex;
+    protected int _combatLayerIndex;
     protected virtual void Start()
     {
         base.Start();
