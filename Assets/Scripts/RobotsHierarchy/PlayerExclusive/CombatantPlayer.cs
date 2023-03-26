@@ -16,6 +16,7 @@ public class CombatantPlayer : CombativeRobot
     {
         base.Start();
         rigidbody = GetComponent<Rigidbody>();
+        enemiesNearby = new List<CombativeGuard>();
     }
 
     protected override void Update()
@@ -32,7 +33,7 @@ public class CombatantPlayer : CombativeRobot
             // Fighting exclusive
             if(target != null)
             {
-                //OnChangeTarget();
+                OnChangeTarget();
                 OnPlayerAttack();
                 checkForBlockingState();
             }
@@ -111,32 +112,43 @@ public class CombatantPlayer : CombativeRobot
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            var newTarget = enemiesNearby.Find(enemy => enemy != target);
-            SetTarget(newTarget);
+            ReTarget();
         }
+    }
+
+    private void ReTarget()
+    {
+        var newTarget = enemiesNearby.Find(enemy => enemy != target);
+        SetTarget(newTarget);
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.TryGetComponent<CombativeGuard>(out CombativeGuard enemy))
+        if(other.CompareTag("Enemy"))
         {
+            var enemy = other.GetComponent<CombativeGuard>();
             if(target is null)
             {
                 SetTarget(enemy);
             }
-            //enemiesNearby.Add(enemy);
+            enemiesNearby.Add(enemy);
             //enemy.SetTarget(this);
         }
     }
 
-    /*private void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
-        if (other.TryGetComponent<CombativeGuard>(out CombativeGuard enemy))
+        if (other.CompareTag("Enemy"))
         {
+            var enemy = other.GetComponent<CombativeGuard>();
             enemiesNearby.Remove(enemy);
             if (enemiesNearby.Count == 0)
             {
                 UnTarget();
             }
+            else if(enemy == target)
+            {
+                ReTarget();
+            }
         }
-    }*/
+    }
 }
