@@ -6,9 +6,16 @@ using UnityEngine;
 public abstract class CombativeRobot : LocomotiveRobot
 {
     private static readonly float COMBAT_MOVEMENT_SPEED = 2.5f;
+    private static readonly int BLOCKING_DIVIDER = 2;
+    private static readonly float NEXT_ATTACK_COOLDOWN = 1f;
 
-    protected Transform target = null;
-    protected int _combatLayerIndex;
+    protected CombativeRobot target = null;
+    private int _combatLayerIndex;
+    private int lightAttackIndex = 0;
+    private float _nextAttackOffset = NEXT_ATTACK_COOLDOWN;
+    private bool _isAttacking;
+    protected bool _isBlocking = false;
+    protected bool _isMovementBlocked = false;
     protected virtual void Start()
     {
         base.Start();
@@ -18,9 +25,13 @@ public abstract class CombativeRobot : LocomotiveRobot
     protected virtual void Update()
     {
         base.Update();
+        if (target != null)
+        {
+            CheckForAttackingState();
+        }
     }
 
-    protected void SetTarget(Transform newTarget)
+    public void SetTarget(CombativeRobot newTarget)
     {
         target = newTarget;
         if(animator.GetLayerWeight(_combatLayerIndex) != 1)
@@ -29,7 +40,7 @@ public abstract class CombativeRobot : LocomotiveRobot
         }
     }
 
-    protected void UnTarget()
+    public void UnTarget()
     {
         target = null;
         StopLookingAt();
@@ -46,7 +57,7 @@ public abstract class CombativeRobot : LocomotiveRobot
         {
             animator.SetFloat("vertical", verticalAxis);
             animator.SetFloat("horizontal", horizontalAxis);
-            Vector3 l_targetPosition = target.position;
+            Vector3 l_targetPosition = target.transform.position;
             l_targetPosition.y = transform.position.y;
             LookAtTarget(l_targetPosition);
             if (verticalAxis != 0)
@@ -58,5 +69,66 @@ public abstract class CombativeRobot : LocomotiveRobot
                 transform.position += transform.right * horizontalAxis * COMBAT_MOVEMENT_SPEED * Time.deltaTime;
             }
         }
+    }
+
+    protected void OnRobotAttack()
+    {
+        if (!_isAttacking)
+        {
+            _isAttacking = true;
+            _isMovementBlocked = true;
+            animator.SetBool("isAttacking", true);
+        }
+        lightAttackIndex++;
+        if (lightAttackIndex > 4)
+        {
+            lightAttackIndex = 1;
+        }
+        _nextAttackOffset = NEXT_ATTACK_COOLDOWN;
+        animator.SetInteger("lightAttacks", lightAttackIndex);
+    }
+
+    private void CheckForAttackingState()
+    {
+        if (_isAttacking)
+        {
+            _nextAttackOffset -= Time.deltaTime;
+            if (_nextAttackOffset <= 0)
+            {
+                _isAttacking = false;
+                _isMovementBlocked = false;
+                lightAttackIndex = 0;
+                animator.SetBool("isAttacking", false);
+                animator.SetInteger("lightAttacks", lightAttackIndex);
+            }
+        }
+    }
+
+    protected void ToggleBlocking(bool block)
+    {
+        if(block)
+        {
+            _isBlocking = _isMovementBlocked = true;
+            animator.SetBool("isBlocking", true);
+        }
+        else
+        {
+            _isBlocking = _isMovementBlocked = false;
+            animator.SetBool("isBlocking", false);
+        }
+    }
+
+    public void OnReceiveDamage(int amount)
+    {
+        animator.SetTrigger("beingHit");
+        if (_isBlocking)
+        {
+            base.OnReceiveDamage((int)Mathf.Floor(amount / BLOCKING_DIVIDER));
+        }
+        else
+        {
+            base.OnReceiveDamage(amount);
+        }
+        // TODO: Implementar animaciones de golpes
     }
 }
