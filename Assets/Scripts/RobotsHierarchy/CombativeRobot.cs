@@ -120,7 +120,6 @@ public abstract class CombativeRobot : LocomotiveRobot
 
     public void OnReceiveDamage(int amount)
     {
-        animator.SetTrigger("beingHit");
         if (_isBlocking)
         {
             base.OnReceiveDamage((int)Mathf.Floor(amount / BLOCKING_DIVIDER));
@@ -128,7 +127,8 @@ public abstract class CombativeRobot : LocomotiveRobot
         else
         {
             base.OnReceiveDamage(amount);
+            animator.SetFloat("hitReaction", Random.Range(0, 2));
         }
-        // TODO: Implementar animaciones de golpes
+        animator.SetTrigger("beingHit");
     }
 }
