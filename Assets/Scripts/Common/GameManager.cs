@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private GameManager instance;
-
+    private PlataformerPlayer player;
     private void Awake()
     {
         if(instance is null)
@@ -17,6 +17,17 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlataformerPlayer>();
+        player.OnDeath += OnGameQuit;
+    }
+
+    private void OnDestroy()
+    {
+        player.OnDeath -= OnGameQuit;
     }
 
     public void OnGameQuit()

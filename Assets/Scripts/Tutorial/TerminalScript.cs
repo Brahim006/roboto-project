@@ -43,7 +43,7 @@ public class TerminalScript : MonoBehaviour
         if(
             Input.GetKeyDown(KeyCode.E) &&
             !areQueuesEmpty &&
-            other.TryGetComponent<CharacterController>(out CharacterController player)
+            other.TryGetComponent<PlataformerPlayer>(out PlataformerPlayer player)
           )
         {
             player.PressButton(transform.position);

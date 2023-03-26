@@ -12,7 +12,7 @@ public class EntrancePipes : MonoBehaviour
             Input.GetKeyDown(KeyCode.E) &&
             levelManager.IsHeadStucked() &&
             !levelManager.IsLeglessWorkerActive() &&
-            other.gameObject.TryGetComponent<CharacterController>(out CharacterController player)
+            other.gameObject.TryGetComponent<PlataformerPlayer>(out PlataformerPlayer player)
           )
         {
             player.PressButton(transform.position);
