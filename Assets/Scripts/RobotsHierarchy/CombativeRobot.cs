@@ -9,10 +9,14 @@ public abstract class CombativeRobot : LocomotiveRobot
     private static readonly int BLOCKING_DIVIDER = 2;
     private static readonly float NEXT_ATTACK_COOLDOWN = 1f;
     protected static readonly float HIT_DISTANCE = 1.7f;
+    protected static readonly float PARTICLE_EMISION_TIME = 1f;
 
     protected CombativeRobot target = null;
+    private GameObject sparkEmitter;
+
     private int _combatLayerIndex;
     protected int lightAttackIndex = 0;
+    private float _sparksEmitterOffset = PARTICLE_EMISION_TIME;
     private float _nextAttackOffset = NEXT_ATTACK_COOLDOWN;
     private bool _isAttacking;
     protected bool _isBlocking = false;
@@ -20,6 +24,8 @@ public abstract class CombativeRobot : LocomotiveRobot
     protected virtual void Start()
     {
         base.Start();
+        sparkEmitter = transform.GetChild(1).gameObject;
+        sparkEmitter.SetActive(false);
         _combatLayerIndex = animator.GetLayerIndex("Combat");
     }
 
@@ -30,6 +36,7 @@ public abstract class CombativeRobot : LocomotiveRobot
         {
             CheckForAttackingState();
         }
+        CheckForSparksEmission();
     }
 
     public void SetTarget(CombativeRobot newTarget)
@@ -113,11 +120,25 @@ public abstract class CombativeRobot : LocomotiveRobot
         animator.SetBool("isBlocking", block);
     }
 
+    private void CheckForSparksEmission()
+    {
+        if(sparkEmitter.active)
+        {
+            _sparksEmitterOffset -= Time.deltaTime;
+            if(_sparksEmitterOffset <= 0)
+            {
+                sparkEmitter.SetActive(false);
+            }
+        }
+    }
+
     public void OnReceiveDamage(int amount)
     {
         if (_isBlocking)
         {
             base.OnReceiveDamage((int)Mathf.Floor(amount / BLOCKING_DIVIDER));
+            sparkEmitter.SetActive(true);
+            _sparksEmitterOffset = PARTICLE_EMISION_TIME;
         }
         else
         {
