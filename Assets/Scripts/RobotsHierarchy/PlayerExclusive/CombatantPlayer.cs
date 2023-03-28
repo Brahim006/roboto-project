@@ -7,6 +7,7 @@ public class CombatantPlayer : CombativeRobot
 {
     private static readonly float JUMP_MAGNITUDE = 5f;
     private static readonly float FALLING_VELOCITY_THRESHOLD = -1f;
+    private static readonly int HIT_BASE_POWER = 10;
 
     private Rigidbody rigidbody;
     private List<CombativeGuard> enemiesNearby;
@@ -78,6 +79,17 @@ public class CombatantPlayer : CombativeRobot
         if (Input.GetMouseButtonDown(0))
         {
             OnRobotAttack();
+            bool successfullHit = Physics.Raycast(
+            transform.position + Vector3.up,
+            transform.forward,
+            out RaycastHit hitInfo,
+            HIT_DISTANCE
+            );
+            
+            if (successfullHit && hitInfo.transform.gameObject.TryGetComponent<CombativeGuard>(out CombativeGuard enemy))
+            {
+                enemy.OnReceiveDamage(HIT_BASE_POWER * lightAttackIndex);
+            }
         }
     }
 

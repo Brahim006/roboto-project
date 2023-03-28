@@ -8,10 +8,11 @@ public abstract class CombativeRobot : LocomotiveRobot
     private static readonly float COMBAT_MOVEMENT_SPEED = 2.5f;
     private static readonly int BLOCKING_DIVIDER = 2;
     private static readonly float NEXT_ATTACK_COOLDOWN = 1f;
+    protected static readonly float HIT_DISTANCE = 1.7f;
 
     protected CombativeRobot target = null;
     private int _combatLayerIndex;
-    private int lightAttackIndex = 0;
+    protected int lightAttackIndex = 0;
     private float _nextAttackOffset = NEXT_ATTACK_COOLDOWN;
     private bool _isAttacking;
     protected bool _isBlocking = false;
@@ -79,11 +80,13 @@ public abstract class CombativeRobot : LocomotiveRobot
             _isMovementBlocked = true;
             animator.SetBool("isAttacking", true);
         }
+
         lightAttackIndex++;
         if (lightAttackIndex > 4)
         {
             lightAttackIndex = 1;
         }
+
         _nextAttackOffset = NEXT_ATTACK_COOLDOWN;
         animator.SetInteger("lightAttacks", lightAttackIndex);
     }
