@@ -143,7 +143,7 @@ public class CombatantPlayer : CombativeRobot
                 SetTarget(enemy);
             }
             enemiesNearby.Add(enemy);
-            //enemy.SetTarget(this);
+            enemy.SetTarget(this);
         }
     }
 

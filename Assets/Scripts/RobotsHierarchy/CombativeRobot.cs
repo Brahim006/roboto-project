@@ -109,16 +109,8 @@ public abstract class CombativeRobot : LocomotiveRobot
 
     protected void ToggleBlocking(bool block)
     {
-        if(block)
-        {
-            _isBlocking = _isMovementBlocked = true;
-            animator.SetBool("isBlocking", true);
-        }
-        else
-        {
-            _isBlocking = _isMovementBlocked = false;
-            animator.SetBool("isBlocking", false);
-        }
+        _isBlocking = _isMovementBlocked = block;
+        animator.SetBool("isBlocking", block);
     }
 
     public void OnReceiveDamage(int amount)
