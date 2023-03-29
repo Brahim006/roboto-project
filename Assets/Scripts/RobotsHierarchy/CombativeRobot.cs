@@ -13,10 +13,12 @@ public abstract class CombativeRobot : LocomotiveRobot
 
     protected CombativeRobot target = null;
     private GameObject sparkEmitter;
+    private GameObject nutsAndBoltsEmitter;
 
     private int _combatLayerIndex;
     protected int lightAttackIndex = 0;
     private float _sparksEmitterOffset = PARTICLE_EMISION_TIME;
+    private float _nutsAndBoltsEmitterOffset = PARTICLE_EMISION_TIME;
     private float _nextAttackOffset = NEXT_ATTACK_COOLDOWN;
     private bool _isAttacking;
     protected bool _isBlocking = false;
@@ -26,6 +28,8 @@ public abstract class CombativeRobot : LocomotiveRobot
         base.Start();
         sparkEmitter = transform.GetChild(1).gameObject;
         sparkEmitter.SetActive(false);
+        nutsAndBoltsEmitter = transform.GetChild(2).gameObject;
+        nutsAndBoltsEmitter.SetActive(false);
         _combatLayerIndex = animator.GetLayerIndex("Combat");
     }
 
@@ -37,6 +41,7 @@ public abstract class CombativeRobot : LocomotiveRobot
             CheckForAttackingState();
         }
         CheckForSparksEmission();
+        CheckForNutsAndBoltsEmission();
     }
 
     public void SetTarget(CombativeRobot newTarget)
@@ -132,6 +137,18 @@ public abstract class CombativeRobot : LocomotiveRobot
         }
     }
 
+    private void CheckForNutsAndBoltsEmission()
+    {
+        if (nutsAndBoltsEmitter.active)
+        {
+            _nutsAndBoltsEmitterOffset -= Time.deltaTime;
+            if (_nutsAndBoltsEmitterOffset <= 0)
+            {
+                nutsAndBoltsEmitter.SetActive(false);
+            }
+        }
+    }
+
     public void OnReceiveDamage(int amount)
     {
         if (_isBlocking)
@@ -144,6 +161,8 @@ public abstract class CombativeRobot : LocomotiveRobot
         {
             base.OnReceiveDamage(amount);
             animator.SetFloat("hitReaction", Random.Range(0, 2));
+            nutsAndBoltsEmitter.SetActive(true);
+            _nutsAndBoltsEmitterOffset = PARTICLE_EMISION_TIME;
         }
         animator.SetTrigger("beingHit");
     }
