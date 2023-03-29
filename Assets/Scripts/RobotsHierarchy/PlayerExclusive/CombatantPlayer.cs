@@ -142,6 +142,7 @@ public class CombatantPlayer : CombativeRobot
             {
                 SetTarget(enemy);
             }
+            enemy.OnDeath += OnKillEnemy;
             enemiesNearby.Add(enemy);
             enemy.SetTarget(this);
         }
@@ -161,6 +162,21 @@ public class CombatantPlayer : CombativeRobot
             {
                 ReTarget();
             }
+        }
+    }
+
+    private void OnKillEnemy()
+    {
+        target.OnDeath -= OnKillEnemy;
+        enemiesNearby.Remove(target as CombativeGuard);
+        if (enemiesNearby.Count == 0)
+        {
+            UnTarget();
+            _isMovementBlocked = false;
+        }
+        else
+        {
+            ReTarget();
         }
     }
 }

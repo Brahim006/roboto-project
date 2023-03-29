@@ -16,6 +16,7 @@ public class CombativeGuard : CombativeRobot
     private static readonly int HIT_BASE_POWER = 5;
 
     private FightingActionState fightingActionState = FightingActionState.Pursuing;
+    [SerializeField] DeadEnemiesPrefabs deadAnimationPrefabs;
 
     private float _currentActionOffset = 0;
     private int _attacksLeft = 0;
@@ -23,6 +24,7 @@ public class CombativeGuard : CombativeRobot
     protected override void Start()
     {
         base.Start();
+        OnDeath += OnDie;
     }
 
     protected override void Update()
@@ -172,6 +174,13 @@ public class CombativeGuard : CombativeRobot
         {
             fightingActionState = FightingActionState.Pursuing;
         }
+    }
+
+    private void OnDie()
+    {
+        var deadInstance = deadAnimationPrefabs.prefabs[Random.Range(0, deadAnimationPrefabs.prefabs.Length)];
+        Instantiate(deadInstance, transform.position, transform.rotation);
+        Destroy(gameObject);
     }
 }
 

@@ -2510,7 +2510,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 80062644}
-  m_LocalRotation: {x: 0.0064465753, y: 0.9585496, z: -0.28402066, w: 0.021756735}
+  m_LocalRotation: {x: 0.006446594, y: 0.9585496, z: -0.28402063, w: 0.0217568}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -7726,7 +7726,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 292876721}
-  m_LocalRotation: {x: 0.0077248258, y: 0.9400295, z: -0.34033763, w: 0.021336352}
+  m_LocalRotation: {x: 0.007724839, y: 0.9400295, z: -0.3403376, w: 0.02133639}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -26962,6 +26962,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quickWalkSoundClip: {fileID: 0}
   smoothWalkSoundClip: {fileID: 0}
+  deadAnimationPrefabs: {fileID: 11400000, guid: fea694dfd6ca4c54a89da7d867377a5b,
+    type: 2}
 --- !u!82 &706519550
 AudioSource:
   m_ObjectHideFlags: 0
@@ -36279,8 +36281,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 961739749}
-  m_LocalRotation: {x: 0.006446561, y: 0.9585496, z: -0.28402072, w: 0.021756686}
-  m_LocalPosition: {x: -0.93611526, y: 2.491, z: -6.233089}
+  m_LocalRotation: {x: 0.006446595, y: 0.9585496, z: -0.2840207, w: 0.021756802}
+  m_LocalPosition: {x: -0.9361153, y: 2.491, z: -6.233089}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -46314,7 +46316,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1291825657}
-  m_LocalRotation: {x: 0.005181519, y: 0.9733298, z: -0.22828542, w: 0.022092197}
+  m_LocalRotation: {x: 0.005181518, y: 0.97332984, z: -0.22828539, w: 0.0220922}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
