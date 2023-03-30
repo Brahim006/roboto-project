@@ -7,7 +7,7 @@ public abstract class LocomotiveRobot : RobotWithSounds
 {
     private static readonly float FORWARD_SPEED = 3f;
     private static readonly float BACKWARDS_SPEED = 1.5f;
-    private static readonly float ROTATION_SPEED = 90f;
+    private static readonly float ROTATION_SPEED = 110f;
     private static readonly float LERP_INTENSITY = 3.0f;
 
     protected Animator animator;
@@ -29,7 +29,7 @@ public abstract class LocomotiveRobot : RobotWithSounds
             OnRobotLerping();
         }
     }
-    protected void OnRobotMove(float verticalAxis, float horizontalAxis)
+    protected virtual void OnRobotMove(float verticalAxis, float horizontalAxis)
     {
         animator.SetFloat("vertical", verticalAxis);
         animator.SetFloat("horizontal", horizontalAxis);
