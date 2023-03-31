@@ -17,7 +17,9 @@ public class CombativeGuard : CombativeRobot
 
     private FightingActionState fightingActionState = FightingActionState.Pursuing;
     [SerializeField] DeadEnemiesPrefabs deadAnimationPrefabs;
+    [SerializeField] Vector3[] patrollingCheckpoints = new Vector3[4];
 
+    private Vector3 _currentPatrollingPoint;
     private float _currentActionOffset = 0;
     private int _attacksLeft = 0;
     private int _rotateDirection = 1;
@@ -25,6 +27,7 @@ public class CombativeGuard : CombativeRobot
     {
         base.Start();
         OnDeath += OnDie;
+        _currentPatrollingPoint = GetPatrollingPoint();
     }
 
     protected override void Update()
@@ -32,7 +35,7 @@ public class CombativeGuard : CombativeRobot
         base.Update();
         if(target is null)
         {
-
+            OnPatrolling();
         }
         else
         {
@@ -57,6 +60,22 @@ public class CombativeGuard : CombativeRobot
         }
     }
 
+    private void OnPatrolling()
+    {
+        if(Vector3.Distance(transform.position, _currentPatrollingPoint) <= 0.3f)
+        {
+            _currentActionOffset -= Time.deltaTime;
+            if(_currentActionOffset <= 0)
+            {
+                _currentActionOffset = Random.Range(MIN_ACTION_TIME, MAX_ACTION_TIME);
+                _currentPatrollingPoint = GetPatrollingPoint();
+            }
+        }
+        else
+        {
+            OnWalkingTowards(_currentPatrollingPoint);
+        }
+    }
     private void OnWalkingTowards(Vector3 point)
     {
         var direction = point - transform.position;
@@ -181,6 +200,11 @@ public class CombativeGuard : CombativeRobot
         var deadInstance = deadAnimationPrefabs.prefabs[Random.Range(0, deadAnimationPrefabs.prefabs.Length)];
         Instantiate(deadInstance, transform.position, transform.rotation);
         Destroy(gameObject);
+    }
+
+    private Vector3 GetPatrollingPoint()
+    {
+        return patrollingCheckpoints[Random.Range(0, patrollingCheckpoints.Length)];
     }
 }
 
