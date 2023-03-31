@@ -8,6 +8,9 @@ public class TransportationChain : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        other.transform.position += Vector3.left * TRANSPORT_SPEED * Time.fixedDeltaTime;
+        if (!other.isTrigger)
+        {
+            other.transform.position += Vector3.left * TRANSPORT_SPEED * Time.fixedDeltaTime;
+        }
     }
 }

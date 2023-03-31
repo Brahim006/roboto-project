@@ -6,6 +6,7 @@ public class LevelManager : MonoBehaviour
 {
     private LevelManager instance;
 
+    [SerializeField] private GameManager gameManager;
     [SerializeField] GameObject workerLegless;
     [SerializeField] GameObject guard;
     [SerializeField] GameObject stuckHead;
@@ -60,8 +61,7 @@ public class LevelManager : MonoBehaviour
 
     public void OnTutorialLevelCompletion()
     {
-        // TODO: Cambiar de escena y dar feedback al jugador
-        Debug.Log("Terminado");
+        gameManager.TransitionFromTutorialToCity();
     }
     public bool IsLeglessWorkerActive()
     {
