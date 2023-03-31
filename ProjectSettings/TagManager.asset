@@ -8,6 +8,8 @@ TagManager:
   - third-floor
   - destructable-object
   - Enemy
+  - plataformer-environment
+  - combatant-environment
   layers:
   - Default
   - TransparentFX

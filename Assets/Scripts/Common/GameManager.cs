@@ -1,11 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using Scene = UnityEngine.SceneManagement.Scene;
 
 public class GameManager : MonoBehaviour
 {
     private GameManager instance;
     private PlataformerPlayer player;
+
+    public int cityLevelState = 0;
     private void Awake()
     {
         if(instance is null)
@@ -30,6 +35,15 @@ public class GameManager : MonoBehaviour
         player.OnDeath -= OnGameQuit;
     }
 
+    public void TransitionFromTutorialToCity()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    public void TransitionFromCityToFactory()
+    {
+        SceneManager.LoadScene(2);
+    }
     public void OnGameQuit()
     {
         // TODO: Cambiar esto al buildear
