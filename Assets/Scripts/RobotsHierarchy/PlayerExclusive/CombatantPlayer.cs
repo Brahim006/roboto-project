@@ -13,19 +13,22 @@ public class CombatantPlayer : CombativeRobot
     private List<CombativeGuard> enemiesNearby;
 
     private bool _isFalling = false;
+    private bool _isDead = false;
     protected override void Start()
     {
         base.Start();
         rigidbody = GetComponent<Rigidbody>();
         enemiesNearby = new List<CombativeGuard>();
         GameObject.FindObjectOfType<HUDManager>()?.AssignPlayer(this);
+        OnDeath += OnPlayerDeath;
     }
 
     protected override void Update()
     {
         base.Update();
+        CheckForDeadState();
         CheckForFallingState();
-        if (!_isFalling)
+        if (!_isFalling && !_isDead)
         {
             if(!_isMovementBlocked)
             {
@@ -121,6 +124,26 @@ public class CombatantPlayer : CombativeRobot
         }
     }
 
+    private void CheckForDeadState()
+    {
+        if(_isDead)
+        {
+            if(animator.GetCurrentAnimatorStateInfo(_combatLayerIndex).normalizedTime >= 0.9)
+            {
+                GameObject.FindObjectOfType<GameManager>().RespawnPlayer();
+                _isDead = false;
+                ReceiveHealing(100);
+            }
+        }
+    }
+
+    private void OnPlayerDeath()
+    {
+        //animator.SetTrigger("die");
+        _isBlocking = false;
+        _isMovementBlocked = false;
+        _isDead = true;
+    }
     private void OnChangeTarget()
     {
         if (Input.GetKeyDown(KeyCode.Tab))

@@ -76,6 +76,7 @@ public class EnterFactoryCinematics : MonoBehaviour
         initialCamera.gameObject.SetActive(true);
         enemyGuard.gameObject.SetActive(true);
         player.gameObject.SetActive(true);
+        GameObject.FindObjectOfType<GameManager>().SetLastCheckpoint(player.transform.position);
         Destroy(gameObject);
     }
 }
