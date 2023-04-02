@@ -18,6 +18,7 @@ public class CombatantPlayer : CombativeRobot
         base.Start();
         rigidbody = GetComponent<Rigidbody>();
         enemiesNearby = new List<CombativeGuard>();
+        GameObject.FindObjectOfType<HUDManager>()?.AssignPlayer(this);
     }
 
     protected override void Update()
