@@ -35,6 +35,10 @@ public abstract class RobotWithHealt : MonoBehaviour
         }
         OnHealtChange?.Invoke(health);
     }
+    public int GetHealth()
+    {
+        return health;
+    }
 
     protected void OnHeal(int healAmount)
     {

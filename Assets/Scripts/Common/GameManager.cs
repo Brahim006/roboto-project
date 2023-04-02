@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     private GameManager instance;
     private PlataformerPlayer player;
 
+    public int transitioningHealth = 0;
     public int cityLevelState = 0;
     private void Awake()
     {
@@ -43,6 +44,13 @@ public class GameManager : MonoBehaviour
     public void TransitionFromCityToFactory()
     {
         SceneManager.LoadScene(2);
+    }
+
+    public void TransitionFromFactoryToCity(int currentHealth)
+    {
+        transitioningHealth = currentHealth;
+        cityLevelState = 1;
+        SceneManager.LoadScene(1);
     }
     public void OnGameQuit()
     {

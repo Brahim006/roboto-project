@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class HUDManager : MonoBehaviour
 {
     private HUDManager instance;
-    private PlataformerPlayer player;
+    private CombatantPlayer player;
 
     [SerializeField] private Slider healthBar;
 
@@ -17,6 +17,7 @@ public class HUDManager : MonoBehaviour
         if(instance is null) 
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -30,13 +31,8 @@ public class HUDManager : MonoBehaviour
         healthBar.maxValue = MAX_HEALTH_VALUE;
         healthBar.value = MAX_HEALTH_VALUE;
 
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlataformerPlayer>();
+        player = GameObject.FindGameObjectWithTag("Player")?.GetComponent<CombatantPlayer>();
         player.OnHealtChange += SetHealth;
-    }
-
-    private void OnDestroy()
-    {
-        player.OnHealtChange -= SetHealth;
     }
 
     public void SetHealth(int health)
