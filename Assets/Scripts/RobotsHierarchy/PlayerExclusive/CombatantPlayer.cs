@@ -180,4 +180,9 @@ public class CombatantPlayer : CombativeRobot
             ReTarget();
         }
     }
+
+    public void ReceiveHealing(int amount)
+    {
+        OnHeal(amount);
+    }
 }
