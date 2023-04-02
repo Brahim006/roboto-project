@@ -8,8 +8,9 @@ using Scene = UnityEngine.SceneManagement.Scene;
 public class GameManager : MonoBehaviour
 {
     private GameManager instance;
-    private PlataformerPlayer player;
+    private Vector3 lastCheckpoint;
 
+    public int transitioningHealth = 0;
     public int cityLevelState = 0;
     private void Awake()
     {
@@ -24,17 +25,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Start()
+    public void SetLastCheckpoint(Vector3 point)
     {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlataformerPlayer>();
-        player.OnDeath += OnGameQuit;
+        lastCheckpoint = point;
     }
 
-    private void OnDestroy()
+    public void RespawnPlayer()
     {
-        player.OnDeath -= OnGameQuit;
+        var player = GameObject.FindObjectOfType<CombatantPlayer>();
+        player.transform.position = lastCheckpoint;
     }
-
     public void TransitionFromTutorialToCity()
     {
         SceneManager.LoadScene(1);
@@ -43,6 +43,13 @@ public class GameManager : MonoBehaviour
     public void TransitionFromCityToFactory()
     {
         SceneManager.LoadScene(2);
+    }
+
+    public void TransitionFromFactoryToCity(int currentHealth)
+    {
+        transitioningHealth = currentHealth;
+        cityLevelState = 1;
+        SceneManager.LoadScene(1);
     }
     public void OnGameQuit()
     {

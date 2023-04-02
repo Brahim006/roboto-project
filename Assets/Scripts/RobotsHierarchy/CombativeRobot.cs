@@ -15,7 +15,7 @@ public abstract class CombativeRobot : LocomotiveRobot
     private GameObject sparkEmitter;
     private GameObject nutsAndBoltsEmitter;
 
-    private int _combatLayerIndex;
+    protected int _combatLayerIndex;
     protected int lightAttackIndex = 0;
     private float _sparksEmitterOffset = PARTICLE_EMISION_TIME;
     private float _nutsAndBoltsEmitterOffset = PARTICLE_EMISION_TIME;
