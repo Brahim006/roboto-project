@@ -35,21 +35,26 @@ public class GameManager : MonoBehaviour
         var player = GameObject.FindObjectOfType<CombatantPlayer>();
         player.transform.position = lastCheckpoint;
     }
-    public void TransitionFromTutorialToCity()
+
+    public void StartGame()
     {
         SceneManager.LoadScene(1);
+    }
+    public void TransitionFromTutorialToCity()
+    {
+        SceneManager.LoadScene(2);
     }
 
     public void TransitionFromCityToFactory()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(3);
     }
 
     public void TransitionFromFactoryToCity(int currentHealth)
     {
         transitioningHealth = currentHealth;
         cityLevelState = 1;
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
     public void OnGameQuit()
     {

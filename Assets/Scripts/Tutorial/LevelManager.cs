@@ -6,7 +6,7 @@ public class LevelManager : MonoBehaviour
 {
     private LevelManager instance;
 
-    [SerializeField] private GameManager gameManager;
+    private GameManager gameManager;
     [SerializeField] GameObject workerLegless;
     [SerializeField] GameObject guard;
     [SerializeField] GameObject stuckHead;
@@ -34,6 +34,7 @@ public class LevelManager : MonoBehaviour
     }
     void Start()
     {
+        gameManager = GameObject.FindObjectOfType<GameManager>();
         _timeOffset = LIGHT_TOGGLE_TIME;
         thirdFloorLightA.intensity = LIGHT_INTENSITY;
         thirdFloorLightB.intensity = 0;
