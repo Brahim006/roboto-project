@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField] GameObject workerLegless;
     [SerializeField] GameObject guard;
     [SerializeField] GameObject stuckHead;
+    [SerializeField] MetalDoor metalDoor;
+    [SerializeField] CinemachineFreeLook freelookCamera;
+    [SerializeField] CinemachineVirtualCamera lastLookCamera;
 
     [SerializeField] private Light thirdFloorLightA;
     [SerializeField] private Light thirdFloorLightB;
@@ -62,7 +66,9 @@ public class LevelManager : MonoBehaviour
 
     public void OnTutorialLevelCompletion()
     {
-        gameManager.TransitionFromTutorialToCity();
+        lastLookCamera.gameObject.SetActive(true);
+        freelookCamera.gameObject.SetActive(false);
+        metalDoor.OpenDoor();
     }
     public bool IsLeglessWorkerActive()
     {

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class RobotGuardController : PlayerSpotter
 {
-    private static readonly float PUSH_INTENSITY = 5f;
+    private static readonly float PUSH_INTENSITY = 10f;
 
     private GuardState guardState = GuardState.Idle;
     protected override void Start()
@@ -40,9 +40,11 @@ public class RobotGuardController : PlayerSpotter
                 var l_playerLookPoint = transform.position;
                 l_playerLookPoint.y = player.transform.position.y;
                 var l_playerRB = player.GetComponent<Rigidbody>();
-                l_playerRB.velocity = new Vector3(0, 0, 0);
-                l_playerRB.AddForce((player.transform.forward * -1) + Vector3.up * PUSH_INTENSITY, ForceMode.Impulse);
-                player.OnReceiveDamage(5);
+                l_playerRB.AddForceAtPosition(
+                    (player.transform.forward * -1) * PUSH_INTENSITY,
+                    player.transform.position,
+                    ForceMode.Impulse
+                    );
             }
             else if(guardState != GuardState.GuardIdle)
             {

@@ -5,12 +5,12 @@ using UnityEngine;
 public class ActivablePlataform : MonoBehaviour
 {
     private Animator animator;
-    void Start()
+    protected virtual void Start()
     {
         animator = GetComponent<Animator>();
     }
 
-    public void OnToggleActive () 
+    public virtual void OnToggleActive () 
     {
         animator.SetBool("isActive", !animator.GetBool("isActive"));
     }
