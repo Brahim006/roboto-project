@@ -7,25 +7,25 @@ using UnityEngine.Playables;
 public class PlataformerPlayer : LocomotiveRobot
 {
     private static readonly float JUMP_MAGNITUDE = 5f;
-    private static readonly float PRESS_BUTTON_ANIMATION_LENGTH = 3f;
+    private static readonly float ACTION_ANIMATION_LENGTH = 3f;
     private static readonly float FALLING_VELOCITY_THRESHOLD = -1f;
 
     private Rigidbody rigidbody;
 
     private bool _isFalling = false;
-    private float _pressButtonOffset;
+    private float _actionffset;
     private bool _isActionBlocked = false;
     protected override void Start()
     {
         base.Start();
         rigidbody = GetComponent<Rigidbody>();
-        _pressButtonOffset = PRESS_BUTTON_ANIMATION_LENGTH;
+        _actionffset = ACTION_ANIMATION_LENGTH;
     }
 
     protected override void Update()
     {
         base.Update();
-        OnPlayerPressingButton();
+        OnPlayerPerformingAction();
         if (!_isActionBlocked)
         {
             CheckForFallingState();
@@ -84,15 +84,22 @@ public class PlataformerPlayer : LocomotiveRobot
         }
     }
 
-    private void OnPlayerPressingButton()
+    private void OnPlayerPerformingAction()
     {
-        _pressButtonOffset -= Time.deltaTime;
-        if (_pressButtonOffset <= 0)
+        _actionffset -= Time.deltaTime;
+        if (_actionffset <= 0)
         {
-            _pressButtonOffset = PRESS_BUTTON_ANIMATION_LENGTH;
+            _actionffset = ACTION_ANIMATION_LENGTH;
             _isActionBlocked = false;
             StopLookingAt();
         }
+    }
+
+    public void Stomp(Vector3 direction)
+    {
+        _isActionBlocked = true;
+        LookAtTarget(direction);
+        animator.SetTrigger("stomping");
     }
 
     public void PressButton(Vector3 buttonDirection)
