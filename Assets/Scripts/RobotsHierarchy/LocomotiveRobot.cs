@@ -41,11 +41,17 @@ public abstract class LocomotiveRobot : RobotWithSounds
                 verticalAxis *
                 Time.deltaTime *
                 (verticalAxis > 0 ? FORWARD_SPEED : BACKWARDS_SPEED);
+            PlayWalkClip();
         }
 
         if (horizontalAxis != 0)
         {
             transform.Rotate(Vector3.up, horizontalAxis * ROTATION_SPEED * Time.deltaTime);
+            PlayWalkClip();
+        }
+        if(verticalAxis == 0 && horizontalAxis == 0)
+        {
+            StopWalkClip();
         }
     }
 

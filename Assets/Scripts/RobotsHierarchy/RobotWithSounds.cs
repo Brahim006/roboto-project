@@ -4,30 +4,26 @@ using UnityEngine;
 
 public abstract class RobotWithSounds : RobotWithHealt
 {
-    protected AudioSource audioPlayer;
-    [SerializeField] private AudioClip quickWalkSoundClip;
-    [SerializeField] private AudioClip smoothWalkSoundClip;
+    protected AudioSource stepsAudioPlayer;
     protected virtual void Start()
     {
         base.Start();
-        audioPlayer = GetComponent<AudioSource>();
+        stepsAudioPlayer = GetComponents<AudioSource>()[0];
     }
 
-    protected void PlayQuickWalkClip()
+    protected void PlayWalkClip()
     {
-        audioPlayer.clip = quickWalkSoundClip;
-        audioPlayer.Play();
+        if(!stepsAudioPlayer.isPlaying)
+        {
+            stepsAudioPlayer.Play();
+        }
     }
 
-    protected void PlaySmoothWalkClip()
+    protected void StopWalkClip()
     {
-        audioPlayer.clip = smoothWalkSoundClip;
-        audioPlayer.Play();
-    }
-
-    protected void StopAudio()
-    {
-        audioPlayer.Stop();
-        audioPlayer.clip = null;
+        if (stepsAudioPlayer.isPlaying)
+        {
+            stepsAudioPlayer.Stop();
+        }
     }
 }
