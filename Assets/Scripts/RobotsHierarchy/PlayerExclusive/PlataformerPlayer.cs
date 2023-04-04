@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.Playables;
 
@@ -109,7 +108,7 @@ public class PlataformerPlayer : LocomotiveRobot
         animator.SetTrigger("pressButton");
     }
 
-    public void OnReceiveDamage(int amount)
+    new public void OnReceiveDamage(int amount)
     {
         base.OnReceiveDamage(amount);
     }

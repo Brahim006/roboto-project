@@ -9,6 +9,7 @@ public class CityLevelManager : MonoBehaviour
     [SerializeField] private GameObject plataformerState;
     [SerializeField] private GameObject combatantState;
     [SerializeField] private GameObject sun;
+    [SerializeField] private CombatantPlayer combatantPlayer;
 
     private GameManager gameManager;
     private void Awake()
@@ -25,14 +26,21 @@ public class CityLevelManager : MonoBehaviour
     void Start()
     {
         gameManager = GameObject.FindObjectOfType<GameManager>();
+        sun.transform.Rotate(145, -100, 0);
         if(gameManager.cityLevelState == 0)
         {
             plataformerState.SetActive(true);
-            sun.transform.Rotate(145, -100, 0);
+            combatantState.SetActive(false);
         }
         else
         {
             combatantState.SetActive(true);
+            plataformerState.SetActive(false);
+            if(combatantPlayer.gameObject.active)
+            {
+                gameManager.SetLastCheckpoint(combatantPlayer.transform.position);
+                combatantPlayer.OnReceiveDamage(100 - gameManager.transitioningHealth);
+            }
         }
     }
 
