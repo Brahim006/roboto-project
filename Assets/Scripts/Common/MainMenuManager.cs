@@ -6,7 +6,6 @@ public class MainMenuManager : MonoBehaviour
 {
     [SerializeField] private GameObject credits;
     [SerializeField] private GameObject menuContent;
-    
     public void ToggleCredits()
     {
         if(menuContent.active)
