@@ -34,10 +34,13 @@ public class PlataformerPlayer : LocomotiveRobot
         if (!_isActionBlocked)
         {
             CheckForFallingState();
-            if(!_isFalling && !_isJumping)
+            if(!_isFalling)
             {
                 OnPlayerWalk();
-                OnPlayerJump();
+                if(!_isJumping)
+                {
+                    OnPlayerJump();
+                }
             }
             else
             {
@@ -53,14 +56,16 @@ public class PlataformerPlayer : LocomotiveRobot
         {
             OnRobotMove(
             Input.GetAxisRaw("Vertical"),
-            Input.GetAxis("Horizontal")
+            Input.GetAxis("Horizontal"),
+            !_isJumping
             );
         }
         else
         {
             OnRobotMove(
             Input.GetAxisRaw("Vertical"),
-            Input.GetAxisRaw("Horizontal")
+            Input.GetAxisRaw("Horizontal"),
+            !_isJumping
             );
         }
         
@@ -81,7 +86,7 @@ public class PlataformerPlayer : LocomotiveRobot
 
     private void CheckForFallingState()
     {
-        if (rigidbody.velocity.y < FALLING_VELOCITY_THRESHOLD)
+        if (rigidbody.velocity.y <= FALLING_VELOCITY_THRESHOLD)
         {
             // Está cayendo
             _isFalling = true;

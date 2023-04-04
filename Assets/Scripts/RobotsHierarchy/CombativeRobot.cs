@@ -60,11 +60,11 @@ public abstract class CombativeRobot : LocomotiveRobot
         animator.SetLayerWeight(_combatLayerIndex, 0);
     }
 
-    protected virtual void OnRobotMove(float verticalAxis, float horizontalAxis)
+    protected virtual void OnRobotMove(float verticalAxis, float horizontalAxis, bool reproduceSounds)
     {
         if(target is null)
         {
-            base.OnRobotMove(verticalAxis, horizontalAxis);
+            base.OnRobotMove(verticalAxis, horizontalAxis, reproduceSounds);
         }
         else
         {
@@ -76,17 +76,17 @@ public abstract class CombativeRobot : LocomotiveRobot
             if (verticalAxis != 0)
             {
                 transform.position += transform.forward * verticalAxis * COMBAT_MOVEMENT_SPEED * Time.deltaTime;
-                PlayWalkClip();
+                if (reproduceSounds) PlayWalkClip();
             }
             if(horizontalAxis != 0)
             {
                 transform.position += transform.right * horizontalAxis * COMBAT_MOVEMENT_SPEED * Time.deltaTime;
-                PlayWalkClip();
+                if (reproduceSounds) PlayWalkClip();
             }
 
             if (verticalAxis == 0 && horizontalAxis == 0)
             {
-                StopWalkClip();
+                if (reproduceSounds) StopWalkClip();
             }
         }
     }

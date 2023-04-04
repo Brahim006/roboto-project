@@ -29,7 +29,7 @@ public abstract class LocomotiveRobot : RobotWithSounds
             OnRobotLerping();
         }
     }
-    protected virtual void OnRobotMove(float verticalAxis, float horizontalAxis)
+    protected virtual void OnRobotMove(float verticalAxis, float horizontalAxis, bool reproduceSounds)
     {
         animator.SetFloat("vertical", verticalAxis);
         animator.SetFloat("horizontal", horizontalAxis);
@@ -41,17 +41,17 @@ public abstract class LocomotiveRobot : RobotWithSounds
                 verticalAxis *
                 Time.deltaTime *
                 (verticalAxis > 0 ? FORWARD_SPEED : BACKWARDS_SPEED);
-            PlayWalkClip();
+            if(reproduceSounds) PlayWalkClip();
         }
 
         if (horizontalAxis != 0)
         {
             transform.Rotate(Vector3.up, horizontalAxis * ROTATION_SPEED * Time.deltaTime);
-            PlayWalkClip();
+            if (reproduceSounds) PlayWalkClip();
         }
         if(verticalAxis == 0 && horizontalAxis == 0)
         {
-            StopWalkClip();
+            if (reproduceSounds) StopWalkClip();
         }
     }
 

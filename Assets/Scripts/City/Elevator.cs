@@ -8,8 +8,14 @@ public class Elevator : MonoBehaviour
     [SerializeField] private float higherHeight;
     [SerializeField] private float lowerHeight;
     [SerializeField] private MovementDirection currentDirection;
+    private AudioSource audioSource;
 
     private bool _isActive = false;
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
     void Update()
     {
         if(_isActive)
@@ -36,6 +42,14 @@ public class Elevator : MonoBehaviour
     public void ToggleActive()
     {
         _isActive = !_isActive;
+        if(_isActive)
+        {
+            audioSource.Play();
+        }
+        else
+        {
+            audioSource.Stop();
+        }
     }
 }
 

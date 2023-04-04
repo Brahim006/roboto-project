@@ -31,12 +31,15 @@ public class CombatantPlayer : CombativeRobot
         base.Update();
         CheckForDeadState();
         CheckForFallingState();
-        if (!_isFalling && !_isJumping && !_isDead)
+        if (!_isFalling && !_isDead)
         {
             if(!_isMovementBlocked)
             {
                 OnPlayerWalk();
-                OnPlayerJump();
+                if(!_isJumping)
+                {
+                    OnPlayerJump();
+                }
             }
             // Fighting exclusive
             if(target != null)
@@ -55,14 +58,16 @@ public class CombatantPlayer : CombativeRobot
         {
             OnRobotMove(
             Input.GetAxisRaw("Vertical"),
-            Input.GetAxis("Horizontal")
+            Input.GetAxis("Horizontal"),
+            !_isJumping
             );
         }
         else
         {
             OnRobotMove(
             Input.GetAxisRaw("Vertical"),
-            Input.GetAxisRaw("Horizontal")
+            Input.GetAxisRaw("Horizontal"),
+            !_isJumping
             );
         }
 
