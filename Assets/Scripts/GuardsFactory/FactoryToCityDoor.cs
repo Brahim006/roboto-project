@@ -8,12 +8,14 @@ public class FactoryToCityDoor : MonoBehaviour
 
     [SerializeField] private FactoryLevelManager levelManager;
     [SerializeField] private CombativeGuard[] guardsToKill;
+    private AudioSource audioSource;
 
     private int _guardsLeft;
     void Start()
     {
         _guardsLeft = guardsToKill.Length;
-        foreach(CombativeGuard guard in guardsToKill)
+        audioSource = GetComponent<AudioSource>();
+        foreach (CombativeGuard guard in guardsToKill)
         {
             guard.OnDeath += OnKillGuard;
         }
@@ -29,6 +31,7 @@ public class FactoryToCityDoor : MonoBehaviour
     private void OnKillGuard()
     {
         _guardsLeft--;
+        audioSource.Play();
     }
 
     private void OnTriggerEnter(Collider other)

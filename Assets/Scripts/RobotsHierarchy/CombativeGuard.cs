@@ -82,7 +82,7 @@ public class CombativeGuard : CombativeRobot
         direction.y = transform.position.y;
         direction.Normalize();
         var localizedDirection = transform.InverseTransformDirection(direction);
-        OnRobotMove(localizedDirection.z, localizedDirection.x);
+        OnRobotMove(localizedDirection.z, localizedDirection.x, true);
     }
     private void OnPursuingPlayer()
     {
@@ -98,7 +98,7 @@ public class CombativeGuard : CombativeRobot
         }
         else
         {
-            OnRobotMove(0, 0);
+            OnRobotMove(0, 0, true);
             ChooseFightingAction();
         }
     }
@@ -135,7 +135,7 @@ public class CombativeGuard : CombativeRobot
         _currentActionOffset -= Time.deltaTime;
         if(_currentActionOffset >= 0)
         {
-            OnRobotMove(0, _rotateDirection);
+            OnRobotMove(0, _rotateDirection, true);
         }
         else
         {

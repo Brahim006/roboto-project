@@ -10,14 +10,20 @@ public class PlataformerPlayer : LocomotiveRobot
     private static readonly float FALLING_VELOCITY_THRESHOLD = -1f;
 
     private Rigidbody rigidbody;
+    private AudioSource jumpAudioSource;
+    private AudioSource buttonPushAudioSource;
 
     private bool _isFalling = false;
+    private bool _isJumping = false;
     private float _actionffset;
     private bool _isActionBlocked = false;
     protected override void Start()
     {
         base.Start();
         rigidbody = GetComponent<Rigidbody>();
+        var audioSources = GetComponents<AudioSource>();
+        jumpAudioSource = audioSources[1];
+        buttonPushAudioSource = audioSources[2];
         _actionffset = ACTION_ANIMATION_LENGTH;
     }
 
@@ -31,7 +37,14 @@ public class PlataformerPlayer : LocomotiveRobot
             if(!_isFalling)
             {
                 OnPlayerWalk();
-                OnPlayerJump();
+                if(!_isJumping)
+                {
+                    OnPlayerJump();
+                }
+            }
+            else
+            {
+                StopWalkClip();
             }
         }
     }
@@ -43,14 +56,16 @@ public class PlataformerPlayer : LocomotiveRobot
         {
             OnRobotMove(
             Input.GetAxisRaw("Vertical"),
-            Input.GetAxis("Horizontal")
+            Input.GetAxis("Horizontal"),
+            !_isJumping
             );
         }
         else
         {
             OnRobotMove(
             Input.GetAxisRaw("Vertical"),
-            Input.GetAxisRaw("Horizontal")
+            Input.GetAxisRaw("Horizontal"),
+            !_isJumping
             );
         }
         
@@ -63,13 +78,15 @@ public class PlataformerPlayer : LocomotiveRobot
             var l_vertical = Input.GetAxisRaw("Vertical");
             Vector3 l_jumpDirection = (transform.forward * l_vertical) + Vector3.up;
             rigidbody.AddForceAtPosition(l_jumpDirection * JUMP_MAGNITUDE, transform.position, ForceMode.Impulse);
+            _isJumping = true;
+            jumpAudioSource.Play();
             animator.SetTrigger("jumps");
         }
     }
 
     private void CheckForFallingState()
     {
-        if (rigidbody.velocity.y < FALLING_VELOCITY_THRESHOLD)
+        if (rigidbody.velocity.y <= FALLING_VELOCITY_THRESHOLD)
         {
             // Está cayendo
             _isFalling = true;
@@ -78,6 +95,11 @@ public class PlataformerPlayer : LocomotiveRobot
         else
         {
             // No está cayendo
+            if(_isFalling && _isJumping)
+            {
+                _isJumping = false;
+                jumpAudioSource.Play();
+            }
             _isFalling = false;
             animator.SetBool("isFalling", false);
         }
@@ -99,6 +121,7 @@ public class PlataformerPlayer : LocomotiveRobot
         _isActionBlocked = true;
         LookAtTarget(direction);
         animator.SetTrigger("stomping");
+        jumpAudioSource.Play();
     }
 
     public void PressButton(Vector3 buttonDirection)
@@ -106,6 +129,7 @@ public class PlataformerPlayer : LocomotiveRobot
         _isActionBlocked = true;
         LookAtTarget(buttonDirection);
         animator.SetTrigger("pressButton");
+        buttonPushAudioSource.Play();
     }
 
     new public void OnReceiveDamage(int amount)

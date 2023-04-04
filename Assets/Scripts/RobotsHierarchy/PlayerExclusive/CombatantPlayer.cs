@@ -10,14 +10,17 @@ public class CombatantPlayer : CombativeRobot
     private static readonly int HIT_BASE_POWER = 10;
 
     private Rigidbody rigidbody;
+    private AudioSource jumpAudioSource;
     private List<CombativeGuard> enemiesNearby;
 
     private bool _isFalling = false;
+    private bool _isJumping = false;
     private bool _isDead = false;
     protected override void Start()
     {
         base.Start();
         rigidbody = GetComponent<Rigidbody>();
+        jumpAudioSource = GetComponents<AudioSource>()[1];
         enemiesNearby = new List<CombativeGuard>();
         GameObject.FindObjectOfType<HUDManager>()?.AssignPlayer(this);
         OnDeath += OnPlayerDeath;
@@ -33,7 +36,10 @@ public class CombatantPlayer : CombativeRobot
             if(!_isMovementBlocked)
             {
                 OnPlayerWalk();
-                OnPlayerJump();
+                if(!_isJumping)
+                {
+                    OnPlayerJump();
+                }
             }
             // Fighting exclusive
             if(target != null)
@@ -52,14 +58,16 @@ public class CombatantPlayer : CombativeRobot
         {
             OnRobotMove(
             Input.GetAxisRaw("Vertical"),
-            Input.GetAxis("Horizontal")
+            Input.GetAxis("Horizontal"),
+            !_isJumping
             );
         }
         else
         {
             OnRobotMove(
             Input.GetAxisRaw("Vertical"),
-            Input.GetAxisRaw("Horizontal")
+            Input.GetAxisRaw("Horizontal"),
+            !_isJumping
             );
         }
 
@@ -74,6 +82,8 @@ public class CombatantPlayer : CombativeRobot
                 var l_vertical = Input.GetAxisRaw("Vertical");
                 Vector3 l_jumpDirection = (transform.forward * l_vertical) + Vector3.up;
                 rigidbody.AddForceAtPosition(l_jumpDirection * JUMP_MAGNITUDE, transform.position, ForceMode.Impulse);
+                _isJumping = true;
+                jumpAudioSource.Play();
                 animator.SetTrigger("jumps");
             }
         }
@@ -108,6 +118,11 @@ public class CombatantPlayer : CombativeRobot
         else
         {
             // No está cayendo
+            if (_isFalling && _isJumping)
+            {
+                _isJumping = false;
+                jumpAudioSource.Play();
+            }
             _isFalling = false;
             animator.SetBool("isFalling", false);
         }
