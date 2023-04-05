@@ -26,7 +26,7 @@ public class CityLevelManager : MonoBehaviour
     void Start()
     {
         gameManager = GameObject.FindObjectOfType<GameManager>();
-        sun.transform.Rotate(145, -100, 0);
+        //sun.transform.Rotate(145, -100, 0);
         if(gameManager.cityLevelState == 0)
         {
             plataformerState.SetActive(true);

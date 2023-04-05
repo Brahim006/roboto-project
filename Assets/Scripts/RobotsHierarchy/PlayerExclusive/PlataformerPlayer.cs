@@ -37,7 +37,7 @@ public class PlataformerPlayer : LocomotiveRobot
             if(!_isFalling)
             {
                 OnPlayerWalk();
-                if(!_isJumping)
+                if(rigidbody.velocity.y <= 0.5)
                 {
                     OnPlayerJump();
                 }

@@ -6,9 +6,9 @@ using static UnityEngine.GridBrushBase;
 public class CombativeGuard : CombativeRobot
 {
     private static readonly float ACTION_TRIGGER_DISTANCE = 2f;
-    private static readonly float ATTACK_PROBABILITY_RANGE = 2.5f;
-    private static readonly float BLOCK_PROBABILITY_RANGE = 5f;
-    private static readonly float ROTATE_AROUND_PROBABILITY_RANGE = 7.5f;
+    private static readonly float ATTACK_PROBABILITY_RANGE = 5f;
+    private static readonly float BLOCK_PROBABILITY_RANGE = 8f;
+    private static readonly float ROTATE_AROUND_PROBABILITY_RANGE = 10f;
     private static readonly float MIN_ACTION_TIME = 2f;
     private static readonly float MAX_ACTION_TIME = 4f;
     private static readonly float TIME_BETWEEN_ATTACKS = 0.95f;

@@ -7,7 +7,7 @@ public class CombatantPlayer : CombativeRobot
 {
     private static readonly float JUMP_MAGNITUDE = 5f;
     private static readonly float FALLING_VELOCITY_THRESHOLD = -1f;
-    private static readonly int HIT_BASE_POWER = 10;
+    private static readonly int HIT_BASE_POWER = 5;
 
     private Rigidbody rigidbody;
     private AudioSource jumpAudioSource;
@@ -36,7 +36,7 @@ public class CombatantPlayer : CombativeRobot
             if(!_isMovementBlocked)
             {
                 OnPlayerWalk();
-                if(!_isJumping)
+                if(rigidbody.velocity.y <= 0.5)
                 {
                     OnPlayerJump();
                 }
