@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d122d4c594bb3ca41a8d54faebd4231e, type: 3}
+  m_Name: DeadEnemiesPrefabs
+  m_EditorClassIdentifier: 
+  prefabs:
+  - {fileID: 7431217739035572013, guid: a3cb3d90d7c346c4cb15fa470ecfa821, type: 3}
+  - {fileID: 8275771950247972274, guid: 1ea472f51052470448badc4f2ed64cc6, type: 3}
+  - {fileID: 3016410810003708486, guid: 7cfab828d54368244bd9ed517553bd7c, type: 3}
+  - {fileID: 2850431366603817429, guid: 3f8522b26d5b21741b8b097a4b1fb643, type: 3}

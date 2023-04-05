@@ -7,6 +7,9 @@ TagManager:
   - second-floor
   - third-floor
   - destructable-object
+  - Enemy
+  - plataformer-environment
+  - combatant-environment
   layers:
   - Default
   - TransparentFX
@@ -16,7 +19,7 @@ TagManager:
   - UI
   - Character
   - Destructable
-  - 
+  - Enemies
   - 
   - 
   - 
