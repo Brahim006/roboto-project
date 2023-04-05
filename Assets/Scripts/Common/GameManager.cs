@@ -63,7 +63,9 @@ public class GameManager : MonoBehaviour
     }
     public void OnGameQuit()
     {
-        // TODO: Cambiar esto al buildear
-        UnityEditor.EditorApplication.isPlaying = false;
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #endif
+            Application.Quit();
     }
 }
