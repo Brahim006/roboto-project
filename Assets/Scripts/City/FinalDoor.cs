@@ -60,7 +60,7 @@ public class FinalDoor : MonoBehaviour
     {
         if (!other.isTrigger && other.CompareTag("Player"))
         {
-            gameManager.OnGameQuit();
+            gameManager.OnReturnToMainMenu();
         }
     }
 }
